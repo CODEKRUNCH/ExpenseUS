@@ -21,7 +21,7 @@ const Sidebar = ({ onClose }) => {
       style={{
         backgroundColor: '#081028',
         color: '#CBD5E0',
-        width: '200px', // Slightly smaller width
+        width: '201px', // Slightly smaller width
         height: '100vh',
         padding: '15px 0', // Slightly smaller padding
         display: 'flex',
