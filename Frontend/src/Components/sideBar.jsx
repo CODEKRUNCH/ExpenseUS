@@ -51,7 +51,7 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       <div style={{ padding: '0 15px', marginBottom: '20px', width: '100%' }}>
-        <h2 style={{ color: '#E2E8F0', marginBottom: '8px', fontSize: '16px' }}>ExpenseUS</h2>
+        <h2 style={{ color: '#E2E8F0', marginBottom: '8px', fontSize: '19px' }}>ExpenseUS</h2>
         <div
           style={{
             backgroundColor: '#2D3748',
