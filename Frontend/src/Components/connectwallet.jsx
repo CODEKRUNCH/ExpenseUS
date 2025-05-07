@@ -23,7 +23,7 @@ function ConnectWallet () {
 
     return (
         <button onClick={connectWallet} 
-        className="rounded-md ml-5 w-40 h-8 hover:cursor-pointer bg-purple-500 font-semibold text-[14px]"
+        className="text-white rounded-md ml-5 w-40 h-8 hover:cursor-pointer bg-purple-500 font-semibold text-[14px]"
         disabled= {!!walletAddress}>
       
       {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...` : "Connect Wallet"}

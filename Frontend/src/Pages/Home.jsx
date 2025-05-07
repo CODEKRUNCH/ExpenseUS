@@ -31,8 +31,7 @@ const ProfitPathHome = () => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+              alignItems: 'center',
             padding: '15px',
             backgroundColor: '#080F25',
           }}
@@ -125,8 +124,6 @@ const ProfitPathHome = () => {
             </div>
               </div>
                 </div>
-  
-
 
             </div>
         </div>

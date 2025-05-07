@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ConnectWallet from './connectwallet';
 
+
 const Navbar = () => {
   const navigate = useNavigate();
   
@@ -19,7 +20,12 @@ const Navbar = () => {
           <a href="" className="text-white hover:text-indigo-600">About</a>
           <a href="" className="text-white hover:text-indigo-600">Team</a>
         </nav>
-          <ConnectWallet/>
+         <div style={{
+                display:'flex',
+                justifyContent: 'right',        
+            }}>  
+            <ConnectWallet />
+            </div>
        </div>
       </div>
 
