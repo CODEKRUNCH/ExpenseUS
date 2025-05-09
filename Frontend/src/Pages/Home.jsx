@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { PureComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../Components/sideBar';
 import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Import download icon
+import DashboardUpperMetrics from '../components/DashboardMetric';
+import Example from '../components/Graph';
 
 const ProfitPathHome = () => {
   const navigate = useNavigate();
@@ -12,11 +14,10 @@ const ProfitPathHome = () => {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#080F25', color: 'white' }}>
+    <div className='flex text-white bg-[#080F25] min-h-screen'>
       {/* Sidebar */}
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
-      {/* Main Content Area */}
       <div
         style={{
           flexGrow: 1,
@@ -32,18 +33,18 @@ const ProfitPathHome = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '20px',
+            padding: '15px',
             backgroundColor: '#080F25',
           }}
         >
           {/* Welcome Text */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '5px' }}>Welcome back, John</h2>
-            <p style={{ fontSize: '14px', color: '#CBD5E0' }}>Measure your advertising ROI and report website traffic.</p>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '5px' }}>Welcome back, Bablu Boxer</h2>
+            <p style={{ fontSize: '14px', color: '#CBD5E0' }}>Measure your Expenses and Track Your Finances.</p>
           </div>
 
           {/* Right Side Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className='flex items-center'>
             <button
               style={{
                 backgroundColor: 'transparent',
@@ -77,46 +78,61 @@ const ProfitPathHome = () => {
           </div>
         </div>
 
-        {/* Content Body */}
-        <div style={{ padding: '20px' }}>
-          {/* Menu Button - Keep it for potential collapsing if needed */}
-          <button
-            onClick={toggleSidebar}
-            style={{
-              position: 'absolute',
-              top: '20px',
-              left: '20px',
-              background: 'transparent',
-              border: 'none',
-              color: 'white',
-              fontSize: '24px',
-              cursor: 'pointer',
-              zIndex: 10,
-            }}
-          >
-            <AiOutlineMenu />
-          </button>
-
           {/* Your Existing Content */}
-          <div className="text-6xl flex justify-center items-center text-white p-14"></div>
-          <div className="h-screen w-full flex justify-center items-center text-white">
-            <div className="grid h-auto w-auto grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-10 grid-rows-4 gap-4">
-              <div className="col-span-5 row-span-2 bg-[#101935] text-white rounded-xl flex justify-center items-center">
-                taudi
-              </div>
-              <div className="col-span-2 row-span-2 bg-[#101935] text-white rounded-xl flex justify-center items-center">
-                pan
-              </div>
-              <div className="col-span-1 row-span-2 bg-[#101935] text-white rounded-xl flex justify-center items-center">
-                dee
-              </div>
-              <div className="col-span-full row-span-3 bg-[#101935] text-white rounded-xl flex justify-center items-center">
-                siri
-              </div>
-            </div>
+        
+        
+        <div className=" h-screen p-2 w-full flex text-white bg-[#080F25] justify-center gap-3">
+     <div className="grid h-110 w-280 grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 grid-rows-4 gap-4">
+
+
+                        <DashboardUpperMetrics
+          innerheader="Current Balance"
+          cashval="50.8K"
+          grosspercent="28.4"
+                              />
+                        <DashboardUpperMetrics
+          innerheader="Monthly Spending"
+          cashval="100.8K"
+          grosspercent="30.4"
+                        />
+                        <DashboardUpperMetrics
+          innerheader="Budget Utilization"
+          cashval="50%"
+                      />
+                        
+              
+                        <DashboardUpperMetrics
+          innerheader="Savings"
+          cashval="40.8K"
+          grosspercent="-30.4"
+                />
+      
+       <div >
+         <div>
+          <div className='flex pb-2 flex-row gap-4'>
+          <button className='px-2 py-1 bg-[#0B1739] radius rounded-sm whitespace-nowrap'>Last 12 months</button>
+          <button className='px-2 py-1 bg-[#0B1739] radius rounded-sm whitespace-nowrap'>Compare to</button>
+
           </div>
+          
+          <div style={{ 
+              width: '100%', 
+              height: '400px',
+              minWidth: '600px'  // Add minimum width
+            }} >    
+          <Example /> 
+          <div>hello</div>
+            </div>
+              </div>
+                </div>
+  
+
+
+            </div>
         </div>
-      </div>
+
+    
+    </div>
     </div>
   );
 };
