@@ -3,7 +3,8 @@ import ProfitPathLogin from './Pages/Login';
 import ExpenseUsSignup from './Pages/signup';
 import Navbar from './Components/navbar';
 import './App.css';
-import ProfitPathHome from './pages/Home';
+import ProfitPathHome from './Pages/Home';
+import Crypto from './Pages/CryptoVault';
 
 // Layout component that includes the Navbar
 function NavbarLayout() {
@@ -27,6 +28,7 @@ function App() {
         <Route element={<NavbarLayout />}>
           <Route path="/" element={<ProfitPathHome/>} />
           {/* Add your other routes that need Navbar here */}
+          <Route path="/Cryptovault" element={<Crypto />} />
         </Route>
       </Routes>
     </Router>

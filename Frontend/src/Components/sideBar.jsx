@@ -3,6 +3,7 @@ import { AiOutlineSearch, AiFillStar, AiOutlineHome, AiOutlineWallet } from 'rea
 import { BsPeopleFill, BsGearFill } from 'react-icons/bs';
 import { FaBitcoin } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp, MdClose } from 'react-icons/md';
+import ConnectWallet from './connectwallet';
 
 const Sidebar = ({ onClose }) => {
   const [paymentsOpen, setPaymentsOpen] = useState(false);
@@ -50,7 +51,7 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       <div style={{ padding: '0 15px', marginBottom: '20px', width: '100%' }}>
-        <h2 style={{ color: '#E2E8F0', marginBottom: '8px', fontSize: '16px' }}>ExpenseUS</h2>
+        <h2 style={{ color: '#E2E8F0', marginBottom: '8px', fontSize: '19px' }}>ExpenseUS</h2>
         <div
           style={{
             backgroundColor: '#2D3748',
@@ -161,24 +162,9 @@ const Sidebar = ({ onClose }) => {
             <MdArrowDropDown style={arrowIconStyle} />
           </div>
         </div>
-        <button
-          style={{
-            backgroundColor: '#805AD5',
-            color: '#FFFFFF',
-            padding: '8px 15px',
-            borderRadius: '6px',
-            border: 'none',
-            width: '100%',
-            cursor: 'pointer',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontWeight: 'bold',
-            fontSize: '12px',
-          }}
-        >
-          Link Crypto Wallet <span style={{ marginLeft: '5px', fontSize: '10px' }}>→</span>
-        </button>
+        <ConnectWallet >
+          Connect Wallet
+        </ConnectWallet>
       </div>
     </div>
   );
