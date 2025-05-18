@@ -26,6 +26,7 @@ function App() {
         {/* Routes with Navbar */}
         <Route element={<NavbarLayout />}>
           <Route path="/" element={<ProfitPathHome/>} />
+          <Route path="/Cryptovault" element={<Crypto />} />
           {/* Add your other routes that need Navbar here */}
         </Route>
       </Routes>

@@ -11,17 +11,19 @@ function ConnectWallet () {
                 // requestion accounts
                 const accounts = await window.ethereum.request({ method: "eth_requestAccounts"});
                 setWalletAddress(accounts[0]);
-            } catch (err) {
+            } 
+            catch (err) {
                 console.log("Connection Error:", err);
             }
-        } else {
+        } 
+        else {
             alert("Please Install Metamask!");
         }
     };
 
     return (
         <button onClick={connectWallet} 
-        className="bg-blue-600  rounded-lg border border-gray-600 font-lightbold text-white p-2 m-[-16px] hover:bg-blue-500 hover:cursor-pointer "
+        className="text-white rounded-md ml-5 w-40 h-8 hover:cursor-pointer bg-purple-500 font-semibold text-[14px]"
         disabled= {!!walletAddress}>
       
       {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...` : "Connect Wallet"}
