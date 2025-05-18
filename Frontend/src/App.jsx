@@ -3,7 +3,8 @@ import ProfitPathLogin from './Pages/Login';
 import ExpenseUsSignup from './Pages/signup';
 import Navbar from './Components/navbar';
 import './App.css';
-import ProfitPathHome from './pages/Home';
+import ProfitPathHome from './Pages/Home';
+import Crypto from './Pages/CryptoVault';
 
 // Layout component that includes the Navbar
 function NavbarLayout() {

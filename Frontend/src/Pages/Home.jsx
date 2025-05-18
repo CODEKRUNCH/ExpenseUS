@@ -1,6 +1,6 @@
 import React, { PureComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../Components/sideBar';
+import Sidebar from '../components/sideBar';
 import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Import download icon
 import DashboardUpperMetrics from '../components/DashboardMetric';
 import Example from '../components/Graph';
@@ -31,8 +31,7 @@ const ProfitPathHome = () => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+              alignItems: 'center',
             padding: '15px',
             backgroundColor: '#080F25',
           }}
@@ -44,7 +43,8 @@ const ProfitPathHome = () => {
           </div>
 
           {/* Right Side Buttons */}
-          <div className='flex items-center'>
+          <div>
+          <div className='flex'>
             <button
               style={{
                 backgroundColor: 'transparent',
@@ -75,6 +75,7 @@ const ProfitPathHome = () => {
             >
               Create report
             </button>
+           </div>
           </div>
         </div>
 
@@ -125,8 +126,6 @@ const ProfitPathHome = () => {
             </div>
               </div>
                 </div>
-  
-
 
             </div>
         </div>
