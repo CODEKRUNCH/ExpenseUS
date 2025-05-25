@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { AiOutlineSearch, AiFillStar, AiOutlineHome, AiOutlineWallet } from 'react-icons/ai';
 import { BsPeopleFill, BsGearFill } from 'react-icons/bs';
 import { FaBitcoin } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { MdArrowDropDown, MdArrowDropUp, MdClose } from 'react-icons/md';
 import ConnectWallet from './connectwallet';
 
+
+
 const Sidebar = ({ onClose }) => {
+  const navigate = useNavigate();
   const [paymentsOpen, setPaymentsOpen] = useState(false);
   const [cryptoOpen, setCryptoOpen] = useState(false);
 
@@ -78,7 +82,7 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       <ul style={{ listStyleType: 'none', padding: 0, margin: 0, width: '100%' }}>
-        <li style={sidebarItemStyle}>
+        <li style={sidebarItemStyle} onClick={() => navigate('/')}>
           <AiFillStar style={sidebarIconStyle} /> Dashboard
         </li>
         <li style={sidebarItemStyle} onClick={togglePayments}>
@@ -90,7 +94,7 @@ const Sidebar = ({ onClose }) => {
         {paymentsOpen && (
           <ul style={submenuStyle}>
             <li style={sublistItemStyle}>Split Bills</li>
-            <li style={sublistItemStyle}>Income Manager</li>
+            {/* <li style={sublistItemStyle}>Income Manager</li> */}
           </ul>
         )}
         <li style={sidebarItemStyle} onClick={toggleCrypto}>
@@ -105,7 +109,7 @@ const Sidebar = ({ onClose }) => {
             <li style={sublistItemStyle}>Market Alerts</li>
           </ul>
         )}
-        <li style={sidebarItemStyle}>
+        <li style={sidebarItemStyle} onClick={() => navigate('/transactions')}>
           <AiFillStar style={sidebarIconStyle} /> Income Manager
         </li>
         <li style={sidebarItemStyle}>
