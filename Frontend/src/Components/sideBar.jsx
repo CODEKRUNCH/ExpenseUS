@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { AiOutlineSearch, AiFillStar, AiOutlineHome, AiOutlineWallet } from 'react-icons/ai';
 import { BsPeopleFill, BsGearFill } from 'react-icons/bs';
-import { FaBitcoin } from 'react-icons/fa';
+// import { FaBitcoin } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { MdArrowDropDown, MdArrowDropUp, MdClose } from 'react-icons/md';
 import ConnectWallet from './connectwallet';
-
+import { FaBitcoin, FaWallet } from 'react-icons/fa';
 
 
 const Sidebar = ({ onClose }) => {
@@ -118,12 +118,10 @@ const Sidebar = ({ onClose }) => {
             <MdArrowDropDown style={arrowIconStyle} />
           </div>
         </li>
-        <li style={sidebarItemStyle}>
-          <FaBitcoin style={sidebarIconStyle} /> Crypto Wallet
-          <div style={{ marginLeft: 'auto' }}>
-            <MdArrowDropDown style={arrowIconStyle} />
-          </div>
+        <li style={sidebarItemStyle} onClick={() => navigate('/personalwallet')}>
+          <FaWallet style={sidebarIconStyle} /> Personal Wallet
         </li>
+
       </ul>
       <br />
 
