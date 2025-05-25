@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 // import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'; 
 
 const ExpenseUsSignup = () => {
+  
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

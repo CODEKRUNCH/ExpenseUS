@@ -1,10 +1,21 @@
-import axios from 'axios';
-  axios.get('http://127.0.0.1:8000/api/sayless')
-  .then(response=>{
-    console.log('API Response:',response.data);
-  })
-  .catch(error=>{
-    console.error('there was an error! ',error);
-  })
+import axios from "axios";
+import {ACCESS_TOKEN} from "./constants"
 
-export default axiosInstance;
+const api = axios.create({
+    baseURL: import.meta.env.VITE_API_URL
+})
+
+api.interceptors.request.use(
+    (config)=>{
+        const token = localStorage.getItem(ACCESS_TOKEN);
+        if(token)
+        {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        return config
+    },
+    (error)=>{
+        return Promise.reject(error)
+    }
+)
+export default api
