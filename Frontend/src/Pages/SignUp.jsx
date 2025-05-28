@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../api/registerservice';
 // import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'; 
 
 const ExpenseUsSignup = () => {
@@ -8,13 +9,15 @@ const ExpenseUsSignup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async(e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !confirmPassword) {
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
       alert('Please fill out all fields.');
       return;
     }
@@ -33,9 +36,14 @@ const ExpenseUsSignup = () => {
       alert('Passwords do not match.');
       return;
     }
-
-    alert('Sign-up successful!');
+     try {
+    const user = await registerUser(firstName,lastName,email,password);
+    console.log("SignUp successful", user);
     navigate('/login');
+  } catch (error) {
+    console.error("Signup failed", error);
+  }
+
   };
 
   return (
@@ -57,19 +65,36 @@ const ExpenseUsSignup = () => {
           </div>
 
           <form className="space-y-6" onSubmit={handleSignUp}>
-            <div>
+          <div className='flex space-x-3'>
+             <div className='w-1/2'>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Full Name
+                First Name
               </label>
               <input
-                id="name"
+                id="firstname"
                 type="text"
-                placeholder="Your Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="text-black mt-1 w-full block px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
+              </div>
+              <div className='w-1/2'>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Last Name
+              </label>
+              <input
+                id="lastname"
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="text-black mt-1 w-full block px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+             
             </div>
+          </div>
+           
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -84,7 +109,7 @@ const ExpenseUsSignup = () => {
                 className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-
+    
             <div className="relative">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
