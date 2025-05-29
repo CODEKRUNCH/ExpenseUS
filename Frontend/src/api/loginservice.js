@@ -10,7 +10,8 @@ const loginUser = async (email, password) => {
         
         });
           localStorage.clear();
-        const { access, refresh, user } = response.data;
+        const { tokens, user } = response.data;
+        const {access,refresh}=tokens;
         // Store tokens using consistent keys
         localStorage.setItem(ACCESS_TOKEN, access);
         localStorage.setItem(REFRESH_TOKEN, refresh);

@@ -4,11 +4,54 @@ import Sidebar from '../components/sideBar'; // Assuming your sidebar component
 import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Unused, but keeping for consistency with your original code
 import { LuPlus } from "react-icons/lu"; // Plus icon for "Add new" button
 import { IoClose } from "react-icons/io5"; // Close icon for the modal
-
+import { createTransaction } from '../api/transactionstore';
 const Transactions = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [amount,setAmount]= useState('');
+  const [transactionType,setTransactionType]=useState('');
+  const [category,setCategory]=useState('');
+  const [paymentType,setPaymentType]=useState('');
+  const [payer,setPayer]=useState('');
+  const [fromWallet,setFromWallet]= useState('');
+  const [dateTime,setDateTime]= useState('');
+  const [note,setNote]=useState('');
+ const handleTransactionCreate = async(e) =>
+ {
+  e.preventDefault();
+  // Check if any field is empty or not valid
+  if (
+    !amount || 
+    !transactionType || 
+    !category || 
+    !paymentType || 
+    !payer || 
+    !fromWallet || 
+    !dateTime || 
+    !note
+  ) {
+    alert('Please fill out all fields.');
+    return;
+  }
+  try{
+    const transactionData=await createTransaction( Number(amount) ,
+    transactionType,
+    category ,
+    paymentType,  
+    payer ,
+    fromWallet, 
+    dateTime, 
+    note)
+    console.log("Transaction Success",transactionData)
+    setIsModalOpen(false);
+  }
+  catch(error)
+  {
+   console.error("Transaction failed", error);
+  }
+
+ };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -21,7 +64,6 @@ const Transactions = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   // Dummy transaction data
   const transactions = [
     {
@@ -145,7 +187,7 @@ const Transactions = () => {
 
       {/* Add New Transaction Modal */}
       {isModalOpen && (
-        <div className='fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50'>
+        <div className='fixed inset-0 bg-black/50 flex justify-center items-center z-50'>
           <div className='bg-[#0B1739] p-6 rounded-lg shadow-xl w-[550px] relative'>
             <div className='flex justify-between items-center border-b border-gray-700 pb-3 mb-4'>
               <div>
@@ -156,14 +198,16 @@ const Transactions = () => {
                 <IoClose size={24} />
               </button>
             </div>
-
-            <form className='grid grid-cols-2 gap-x-6 gap-y-4 text-sm'>
+            
+            <form onSubmit={handleTransactionCreate} className='grid grid-cols-2 gap-x-6 gap-y-4 text-sm'>
               {/* Row 1 */}
               <div>
                 <label htmlFor='amount' className='block text-gray-300 font-medium mb-1'>Amount</label>
                 <input
                   type='number'
                   id='amount'
+                  value={amount}
+                  onChange={(e)=>setAmount(e.target.value)}
                   placeholder='0'
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 />
@@ -173,6 +217,8 @@ const Transactions = () => {
                 <label htmlFor='transactionType' className='block text-gray-300 font-medium mb-1'>Transaction type</label>
                 <select
                   id='transactionType'
+                  value={transactionType}
+                  onChange={(e)=>setTransactionType(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>Income</option>
@@ -184,6 +230,8 @@ const Transactions = () => {
                 <label htmlFor='category' className='block text-gray-300 font-medium mb-1'>Category</label>
                 <select
                   id='category'
+                  value={category}
+                  onChange={(e)=>setCategory(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>Category</option>
@@ -201,6 +249,8 @@ const Transactions = () => {
                 <label htmlFor='paymentType' className='block text-gray-300 font-medium mb-1'>Payment type</label>
                 <select
                   id='paymentType'
+                  value={paymentType}
+                  onChange={(e)=>setPaymentType(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>Cash</option>
@@ -210,10 +260,12 @@ const Transactions = () => {
                 <p className='text-xs text-gray-500 mt-1'>Choose category.</p>
               </div>
               <div>
-                <label htmlFor='payer' className='block text-gray-300 font-medium mb-1'>Payer</label>
+                <label htmlFor='payedto' className='block text-gray-300 font-medium mb-1'>Payed To:</label>
                 <input
                   type='text'
-                  id='payer'
+                  id='payedto'
+                  value={payer}
+                  onChange={(e)=>setPayer(e.target.value)}
                   placeholder='Name of the person or entity.'
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 />
@@ -223,6 +275,8 @@ const Transactions = () => {
                 <label htmlFor='fromWallet' className='block text-gray-300 font-medium mb-1'>From wallet</label>
                 <select
                   id='fromWallet'
+                  value={fromWallet}
+                  onChange={(e)=>setFromWallet(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>From wallet</option>
@@ -236,9 +290,10 @@ const Transactions = () => {
               <div className='col-span-1'> {/* Make Date span one column */}
                 <label htmlFor='date' className='block text-gray-300 font-medium mb-1'>Date</label>
                 <input
-                  type='date'
+                  type='datetime-local'
                   id='date'
-                  defaultValue='2025-05-24' // Default to today's date
+                  value={dateTime}
+                  onChange={(e)=>setDateTime(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF] date-input-icon'
                 />
                 <p className='text-xs text-gray-500 mt-1'>Select a date.</p>
@@ -248,6 +303,8 @@ const Transactions = () => {
                 <input
                   type='text'
                   id='note'
+                  value={note}
+                  onChange={(e)=>setNote(e.target.value)}
                   placeholder='Add a note.'
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 />

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import serializers
+from .models import Expenserecord
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
@@ -39,4 +40,9 @@ class UserLoginSerializer(serializers.Serializer):
                         }
                     }
         raise serializers.ValidationError("Invalid email or password")
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Expenserecord
+        fields='__all__'
+        read_only_fields=['user']
         
