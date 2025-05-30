@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import loginUser from '../api/loginservice';
+import { useAuth } from '../Components/Authorization/iauthenticated';
 
 const ProfitPathLogin = () => {
   const [email, setEmail] = useState('');
   const [isvalidEmail, SetisValidEmail] = useState(false);
+   const { checkAuth } = useAuth();
   const navigate = useNavigate();
   // this checks for the email validitiy and check each time a new email is written
   useEffect(()=>{
@@ -33,7 +35,8 @@ const handlelogin = async (e) => {
   try {
     const user = await loginUser(email, password);
     console.log("Login successful", user);
-    navigate('/Home');
+    await checkAuth();
+    navigate('/dashboard');
   } catch (error) {
     console.error("Login failed", error);
   }

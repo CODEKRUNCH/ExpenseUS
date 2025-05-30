@@ -15,7 +15,7 @@ api.interceptors.request.use(
         const token = localStorage.getItem(ACCESS_TOKEN);
 
         // Endpoints to exclude from token
-        const skipTokenEndpoints = ['/login/', '/register/', '/password-reset/'];
+        const skipTokenEndpoints = ['/login/', '/register/', '/password-reset/','/token/refresh/'];
 
         // Check if the URL matches any skip endpoints
         if (token && !skipTokenEndpoints.some(endpoint => config.url.endsWith(endpoint))) {
