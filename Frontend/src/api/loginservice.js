@@ -15,7 +15,6 @@ const loginUser = async (email, password) => {
         // Store tokens using consistent keys
         localStorage.setItem(ACCESS_TOKEN, access);
         localStorage.setItem(REFRESH_TOKEN, refresh);
-
         return user;
     }
     catch (error) {

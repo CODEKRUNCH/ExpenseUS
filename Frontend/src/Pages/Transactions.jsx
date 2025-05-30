@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/sideBar'; // Assuming your sidebar component
 import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Unused, but keeping for consistency with your original code
 import { LuPlus } from "react-icons/lu"; // Plus icon for "Add new" button
 import { IoClose } from "react-icons/io5"; // Close icon for the modal
 import { createTransaction } from '../api/transactionstore';
+import { TransactionRetrieve } from "../api/transactionsretrieve";
+import TransactionsTable from '../Components/transactiontable';
 const Transactions = () => {
+
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+ 
   const [amount,setAmount]= useState('');
+  const [payer,setPayer]=useState('');
+  const [note,setNote]=useState('');
+
   const [transactionType,setTransactionType]=useState('');
   const [category,setCategory]=useState('');
   const [paymentType,setPaymentType]=useState('');
-  const [payer,setPayer]=useState('');
+ 
   const [fromWallet,setFromWallet]= useState('');
   const [dateTime,setDateTime]= useState('');
-  const [note,setNote]=useState('');
+
+    const [transactions, setTransactions] = useState([]); // state for transactions
+  
  const handleTransactionCreate = async(e) =>
  {
   e.preventDefault();
@@ -44,7 +53,20 @@ const Transactions = () => {
     dateTime, 
     note)
     console.log("Transaction Success",transactionData)
+
+    setTransactions(prevTransactions => [...prevTransactions, transactionData]);
+  // 🆕 Optionally reset the form
+    setAmount('');
+    setTransactionType('');
+    setCategory('');
+    setPaymentType('');
+    setPayer('');
+    setFromWallet('');
+    setDateTime('');
+    setNote('');
+
     setIsModalOpen(false);
+
   }
   catch(error)
   {
@@ -65,32 +87,21 @@ const Transactions = () => {
     setIsModalOpen(false);
   };
   // Dummy transaction data
-  const transactions = [
-    {
-      id: 1,
-      date: '2025-03-24',
-      amount: '$5,000.00',
-      paymentType: 'Cash',
-      type: 'Expense',
-      category: 'Food & Drinks',
-    },
-    {
-      id: 2,
-      date: '2025-02-01',
-      amount: '$5,000.00',
-      paymentType: 'Cash',
-      type: 'Income',
-      category: 'Others',
-    },
-    {
-      id: 3,
-      date: '2025-01-31',
-      amount: '$5,000.00',
-      paymentType: 'Cash',
-      type: 'Income',
-      category: 'Shopping',
-    },
-  ];
+  
+
+ 
+  useEffect(()=>{
+      const handleTransactionsRetrieve = async () => {
+      try {
+          const user = await TransactionRetrieve();
+          console.log("Retrieval successful", user);
+          setTransactions(user);
+      } catch (error) {
+          console.error("Retrieval failed", error);
+      }
+      };
+      handleTransactionsRetrieve();
+    },[])
 
   return (
     <div className='flex text-white bg-[#080F25] min-h-screen'>
@@ -130,60 +141,9 @@ const Transactions = () => {
             </button>
           </div>
         </div>
-
-        {/* Transactions Table */}
-        <div className='p-4 flex-grow'>
-          <div className='bg-[#0B1739] rounded-lg p-4'>
-            <table className='min-w-full table-auto'>
-              <thead>
-                <tr className='border-b border-gray-700 text-gray-400 text-sm'>
-                  <th className='px-4 py-2 text-left w-10'>
-                    <input type='checkbox' className='form-checkbox bg-gray-800 border-gray-600 rounded' />
-                  </th>
-                  <th className='px-4 py-2 text-left'>Date</th>
-                  <th className='px-4 py-2 text-left'>Amount</th>
-                  <th className='px-4 py-2 text-left'>Payment type</th>
-                  <th className='px-4 py-2 text-left'>Type</th>
-                  <th className='px-4 py-2 text-left'>Category</th>
-                  <th className='px-4 py-2 text-left'></th> {/* For the three dots */}
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((transaction) => (
-                  <tr key={transaction.id} className='border-b border-gray-800'>
-                    <td className='px-4 py-3'>
-                      <input type='checkbox' className='form-checkbox bg-gray-800 border-gray-600 rounded' />
-                    </td>
-                    <td className='px-4 py-3'>{transaction.date}</td>
-                    <td className='px-4 py-3'>{transaction.amount}</td>
-                    <td className='px-4 py-3'>{transaction.paymentType}</td>
-                    <td className={`px-4 py-3 font-semibold ${transaction.type === 'Expense' ? 'text-red-500' : 'text-green-500'}`}>
-                      {transaction.type}
-                    </td>
-                    <td className='px-4 py-3'>{transaction.category}</td>
-                    <td className='px-4 py-3'>...</td> {/* Three dots */}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* Pagination/Selection Footer */}
-            <div className='flex justify-between items-center mt-4 text-sm text-gray-400'>
-              <span>0 of {transactions.length} row(s) selected.</span>
-              <div className='flex items-center space-x-2'>
-                <button className='px-2 py-1 bg-gray-800 rounded-md border border-gray-600'>&lt;</button>
-                <span>1 of 1</span>
-                <button className='px-2 py-1 bg-gray-800 rounded-md border border-gray-600'>&gt;</button>
-                <select className='px-2 py-1 bg-gray-800 rounded-md border border-gray-600 focus:outline-none'>
-                  <option>10</option>
-                  <option>25</option>
-                  <option>50</option>
-                </select>
-              </div>
-            </div>
-          </div>
+        {/* //location of the component */}
+        <TransactionsTable transactions={transactions}/>
         </div>
-      </div>
 
       {/* Add New Transaction Modal */}
       {isModalOpen && (
