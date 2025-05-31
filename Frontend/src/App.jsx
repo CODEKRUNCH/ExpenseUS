@@ -9,6 +9,7 @@ import Crypto from './CryptoVault/Cryptovault';
 import PersonalWallet from './Pages/PersonalWallet';
 import ProtectedRoute from "./Components/protectedpath"
 import { AuthProvider } from './Components/Authorization/iauthenticated';
+import WelcomePage from './Pages/Welcome';
 
 // Layout component that includes the Navbar
 function NavbarLayout() {
@@ -41,6 +42,7 @@ function App() {
           {/* Regular Paths without the default path  */}
           <Route path="/dashboard" element={<ProfitPathHome/>} />
           <Route path="/cryptovault" element={<Crypto />} />
+          <Route path="/home" element={<WelcomePage />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/personalwallet" element={<PersonalWallet />} />
           <Route path="/logout" element={<Logout />} />

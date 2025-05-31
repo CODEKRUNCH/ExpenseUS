@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+
+
+body {
+  /* font-family: "Arial", sans-serif; */
+  background-color: #fff;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "open sans", sans-serif;
+}
+
+h4 {
+  font-size: max(20px, calc(30 * min((100 * 1cqw), 1600px) / 1280));
+  margin-bottom: 20px;
+}
+
+header {
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+.custom-gradient {
+  background: radial-gradient(
+      circle at 20.325217247009277% 38.798468907674156%,
+      rgba(177, 228, 255, 0.88) 0%,
+      23.5%,
+      rgba(177, 228, 255, 0) 47%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(0, 143, 245, 0.88) 0%,
+      20%,
+      rgba(0, 143, 245, 0) 40%
+    ),
+    radial-gradient(
+      circle at 0.45753762125968933% 96.10822041829427%,
+      rgba(237, 32, 107, 0.88) 0%,
+      25%,
+      rgba(237, 32, 107, 0) 50%
+    ),
+    radial-gradient(
+      circle at 6.588236888249716% 10.897714296976725%,
+      rgba(0, 143, 245, 0.88) 0%,
+      37.199999999999996%,
+      rgba(0, 143, 245, 0) 62%
+    ),
+    radial-gradient(
+      circle at 93.6865234375% 11.42578125%,
+      rgba(250, 162, 117, 0.88) 0%,
+      42%,
+      rgba(250, 162, 117, 0) 70%
+    ),
+    radial-gradient(
+      circle at 48.9013671875% 49.521484375%,
+      rgba(255, 255, 255, 0.88) 0%,
+      100%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  /* padding-bottom: ; */
+}
+
+h1.hero-text {
+  font: normal normal bold calc(80 * min((100 * 1cqw), 1600px) / 1280) / 1em
+      "open sans",
+    sans-serif;
+  font-size: max(50px, min(110px, calc(80 * min((100 * 1cqw), 1600px) / 1280)));
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+/* 
+.animate-scroll:hover {
+  animation-play-state: paused;
+} */
+
+.border-round div {
+  border-radius: 25px;
+}
+
+/* Default (Mobile) */
+@media (max-width: 767px) {
+  .animate {
+    transform: translateY(50px);
+  }
+}
+
+/* Medium Screens (md: 768px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  #factoringApp {
+    width: 25%;
+  }
+  #factoringApp p {
+    font-size: 12px;
+    margin-top: 22px;
+  }
+
+  #summary {
+    width: 22%;
+  }
+
+  #submitInvoice {
+    width: 8%;
+  }
+  #fuelCard {
+    width: 13%;
+  }
+  #ar {
+    left: 20%;
+  }
+  #ar,
+  #reserve {
+    width: 8%;
+  }
+
+  #invoice {
+    width: 12%;
+  }
+}
+
+/* Large Screens (lg: 1024px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  #factoringApp p {
+    margin-top: 25px;
+  }
+  #invoice {
+    width: 13%;
+  }
+}
+
+/* Extra Large Screens (xl: 1280px) */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  #factoringApp {
+    width: 26%;
+  }
+}
+
+/* Ultra-Wide Screens (2xl: 1536px) */
+@media (min-width: 1440px) {
+  #factoringApp {
+    width: 25%;
+  }
+  #factoringApp p {
+    margin-top: 50px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  #summary {
+    width: 22%;
+  }
+  #submitInvoice {
+    width: 8%;
+  }
+  #fuelCard {
+    width: 13%;
+  }
+  #ar {
+    left: 20%;
+  }
+  #ar,
+  #reserve {
+    width: 7%;
+  }
+  #invoice {
+    width: 13%;
+  }
+}

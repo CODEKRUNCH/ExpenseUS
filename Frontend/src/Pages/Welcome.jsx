@@ -1,14 +1,12 @@
-import React, { PureComponent, useState } from 'react';
+import React, { useEffect,useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Example from '../components/Graph';
-
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis';
+import '../css/home.css'
 const WelcomePage = () => {
   const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Set initial state to true
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+ const [openMenu, setOpenMenu] = useState(false); // React state
   gsap.registerPlugin(ScrollTrigger);
     const animationContainer = useRef(null);
   const mobileImageRef = useRef(null);
@@ -164,11 +162,11 @@ const WelcomePage = () => {
   return (
     <>
       <header
-      class="flex justify-between items-center shadow-md rounded-full p-3 mx-4 fixed top-5 left-0 right-0 z-20 bg-white/90 backdrop-blur-sm"
+      className="flex justify-between items-center shadow-md rounded-full p-3 mx-4 fixed top-5 left-0 right-0 z-20 bg-white/90 backdrop-blur-sm"
     >
-      <div class="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center">
         {/* <!-- Logo --> */}
-        <a href="index.html" class="logo w-48 py-1">
+        <a href="index.html" className="logo w-48 py-1">
           <svg
             preserveAspectRatio="xMidYMid meet"
             data-bbox="0 0 456.82 52.14"
@@ -239,175 +237,175 @@ const WelcomePage = () => {
           </svg>
         </a>
         {/* <!-- Desktop Menu --> */}
-        <nav class="hidden md:flex space-x-6 items-center text-black">
-          <a href="index.html" class="hover:text-blue-500">Features</a>
-          <a href="integrations.html" class="hover:text-blue-500"
+        <nav className="hidden md:flex space-x-6 items-center text-black">
+          <a href="index.html" className="hover:text-blue-500">Features</a>
+          <a href="integrations.html" className="hover:text-blue-500"
             >Integrations</a
           >
-          <a href="#" class="hover:text-blue-500">Contact Us</a>
-          <a href="#" class="hover:text-blue-500">Pricing</a>
+          <a href="#" className="hover:text-blue-500">Contact Us</a>
+          <a href="#" className="hover:text-blue-500">Pricing</a>
           <a
             href="#"
-            class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+            className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
             >Demo Your App</a
           >
         </nav>
 
         {/* <!-- Mobile Menu Button --> */}
-        <div class="md:hidden flex items-center" x-data="{ openMenu: false }">
-          <button
-            @click="openMenu = !openMenu"
-            class="text-gray-700 focus:outline-none"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          </button>
+ 
+ <div className="md:hidden flex items-center">
+      <button
+        onClick={() => setOpenMenu(!openMenu)} // React click handler
+        className="text-gray-700 focus:outline-none"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
 
-          {/* <!-- Mobile Menu --> */}
-          <div
-            x-show="openMenu"
-            x-transition
-            class="absolute top-full left-0 w-full bg-white shadow-lg rounded-md mt-2 py-2"
-          >
-            <a
-              href="index.html"
-              class="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-              >Features</a
-            >
-            <a
-              href="integrations.html"
-              class="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-              >Integrations</a
-            >
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-              >Contact Us</a
-            >
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-              >Pricing</a
-            >
-            <a
-              href="#"
-              class="block bg-blue-500 text-white text-center px-4 py-2 rounded-full hover:bg-blue-600"
-              >Demo Your App</a
-            >
+      {/* Conditionally render mobile menu */}
+      {openMenu && (
+        <div>
+          {/* Your mobile menu content  */}
+            {/* Mobile Menu */}
+        <div
+          x-show="openMenu"
+          x-transition
+          className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md mt-2 py-2"
+        >
+          <a
+            href="index.html"
+            className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
+          >Features</a>
+          <a
+            href="integrations.html"
+            className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
+          >Integrations</a>
+          <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Contact Us</a>
+          <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Pricing</a>
+          <a
+            href="#"
+            className="block bg-blue-500 text-white text-center px-4 py-2 rounded-full hover:bg-blue-600"
+          >Demo Your App</a>
+        </div>
+        </div>
+      )}
+    </div>
+  {/* {block of code missing}  */}
+      </div>
+</header>
+      {/* Hero Section */}
+      <section className="hero custom-gradient w-full min-h-screen pt-24 md:pt-24">
+        <div className="container mx-auto flex flex-col">
+          {/* Heading Section */}
+          <div className="text-center px-8 flex flex-col items-center justify-center section-heading mt-20 mb-0">
+              <h1 className="hero-text font-bold text-black md:px-16 xl:px-40 lg:px-16 2xl:px-44 mb-4">
+                  The Free App for Freight Factors
+              </h1>
+              <h4 className="text-black font-semibold text-1xl sm:text-2xl mb-6">
+                  White Labeled for Your Company
+              </h4>
+              <a href="#" className="mt-4 bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-blue-600 transition">Demo Your App</a>
+          </div>
+
+          {/* Mobile Screen Section */}
+          <div className="relative">
+              <div className="min-h-[113vh] section-mobile-screen" id="animationContainer">
+                  <div
+                      className="bg-white md:w-[320px] h-full absolute top-24 left-1/2 -translate-x-1/2 rounded-3xl mt-20 hidden md:block"
+                      id="factoringApp"
+                  >
+                      <p className="text-center mt-10">Your Factoring App</p>
+                  </div>
+
+                  <img
+                      src="public/images/fuelcardbalance.png"
+                      alt="Fuel Card Balance"
+                      className="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] w-40 absolute -top-32 left-24 hidden md:block"
+                      id="fuelCard" />
+                  <img
+                      src="./images/ar.png"
+                      alt="Accounts Receivable"
+                      className="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-4 left-70 w-20 hidden md:block"
+                      id="ar" />
+
+                  <img
+                      src="./images/summary.png"
+                      alt="Summary"
+                      className="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-40 -left-28 w-[270px] -mt-1 hidden md:block"
+                      id="summary" />
+
+                  <img
+                      src="./images/submitinvoice.png"
+                      alt="Submit Invoice"
+                      className="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-0 right-24 w-24 hidden md:block"
+                      id="submitInvoice" />
+                  <img
+                      src="./images/reserve.png"
+                      alt="Reserve"
+                      className="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-24 right-48 w-20 hidden md:block"
+                      id="reserve" />
+
+                  <img
+                      src="./images/invoiceaging.png"
+                      alt="Invoice Aging"
+                      className="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-40 -right-14 w-44 hidden md:block"
+                      id="invoice" />
+              </div>
+
+              {/* Description Columns */}
+              <div className="flex lg:container mx-auto mt-10">
+                  {/* 3 columns */}
+                  <div className="w-full md:w-1/3 p-4 hidden lg:block lg:ml-12">
+                      <h3 className="text-4xl font-bold">
+                          Branded Modern Solutions Built for Retention
+                      </h3>
+                  </div>
+                  <div className="w-full md:w-1/3 p-0">
+                      <img
+                          src="images/PhoneCase-size.png"
+                          alt="Phone Case"
+                          className="z-10 absolute md:w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-64 hidden md:block"
+                          id="phoneCase" />
+                      <img
+                          src="images/mobile-frame.png"
+                          alt="Mobile Frame"
+                          className="z-10 absolute md:w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 block md:hidden" />
+                  </div>
+                  <div className="w-full md:w-1/3 p-4 hidden lg:block lg:mr-12 text-lg">
+                      <p className="mb-4">
+                          FactorGenie's white-label platform provides a fully branded mobile
+                          app to enhance client retention and streamline operations.
+                      </p>
+                      <p>
+                          Stand out from competitors and give your clients the digital tools
+                          they expect, without the high cost of custom development.
+                      </p>
+                  </div>
+              </div>
           </div>
         </div>
-      </div>
-    </header>
-
-           {/* { Hero Section > */} 
-    <section class="hero custom-gradient w-full min-h-screen pt-24 md:pt-24">
-            <div class="container mx-auto flex flex-col">
-                {/* < />!-- Heading Section --> */}
-                <div class="text-center px-8 flex flex-col items-center justify-center section-heading mt-20 mb-0">
-                    <h1 class="hero-text font-bold text-black md:px-16 xl:px-40 lg:px-16 2xl:px-44 mb-4">
-                        The Free App for Freight Factors
-                    </h1>
-                    <h4 class="text-black font-semibold text-1xl sm:text-2xl mb-6">
-                        White Labeled for Your Company
-                    </h4>
-                    <a href="#" class="mt-4 bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-blue-600 transition">Demo Your App</a>
-                </div>
-
-                {/* < />!-- Mobile Screen Section --> */}
-                <div class="relative">
-                    <div class="min-h-[113vh] section-mobile-screen" id="animationContainer">
-                        <div
-                            class="bg-white md:w-[320px] h-full absolute top-24 left-1/2 -translate-x-1/2 rounded-3xl mt-20 hidden md:block"
-                            id="factoringApp"
-                        >
-                            <p class="text-center mt-10">Your Factoring App</p>
-                        </div>
-
-                        <img
-                            src="./images/fuelcardbalance.png"
-                            alt=""
-                            class="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] w-40 absolute -top-32 left-24 hidden md:block"
-                            id="fuelCard" />
-                        <img
-                            src="./images/ar.png"
-                            alt=""
-                            class="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-4 left-70 w-20 hidden md:block"
-                            id="ar" />
-
-                        <img
-                            src="./images/summary.png"
-                            alt=""
-                            class="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-40 -left-28 w-[270px] -mt-1 hidden md:block"
-                            id="summary" />
-
-                        <img
-                            src="./images/submitinvoice.png"
-                            alt=""
-                            class="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-0 right-24 w-24 hidden md:block"
-                            id="submitInvoice" />
-                        <img
-                            src="./images/reserve.png"
-                            alt=""
-                            class="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-24 right-48 w-20 hidden md:block"
-                            id="reserve" />
-
-                        <img
-                            src="./images/invoiceaging.png"
-                            alt=""
-                            class="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] absolute top-40 -right-14 w-44 hidden md:block"
-                            id="invoice" />
-                    </div>
-
-                    {/* < />!-- Description Columns --> */}
-                    <div class="flex lg:container mx-auto mt-10">
-                        {/* < />!-- 3 columns --> */}
-                        <div class="w-full md:w-1/3 p-4 hidden lg:block lg:ml-12">
-                            <h3 class="text-4xl font-bold">
-                                Branded Modern Solutions Built for Retention
-                            </h3>
-                        </div>
-                        <div class="w-full md:w-1/3 p-0">
-                            <img
-                                src="images/PhoneCase-size.png"
-                                alt="Phone Case"
-                                class="z-10 absolute md:w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-64 hidden md:block"
-                                id="phoneCase" />
-                            <img
-                                src="images/mobile-frame.png"
-                                alt="Phone Case"
-                                class="z-10 absolute md:w-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 block md:hidden" />
-                        </div>
-                        <div class="w-full md:w-1/3 p-4 hidden lg:block lg:mr-12 text-lg">
-                            <p class="mb-4">
-                                FactorGenie’s white-label platform provides a fully branded mobile
-                                app to enhance client retention and streamline operations.
-                            </p>
-                            <p>
-                                Stand out from competitors and give your clients the digital tools
-                                they expect, without the high cost of custom development.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      </section>
         <div
-            class="conatiner mx-auto p-4 flex flex-col gap-4 text-center lg:hidden"
+            className="conatiner mx-auto p-4 flex flex-col gap-4 text-center lg:hidden"
         >
-                <div class="w-full">
-                    <h3 class="text-3xl font-bold">
+                <div className="w-full">
+                    <h3 className="text-3xl font-bold">
                         Branded Modern Solutions Built for Retention
                     </h3>
                 </div>
-                <div class="w-full">
-                    <p class="mb-4">
+                <div className="w-full">
+                    <p className="mb-4">
                         FactorGenie’s white-label platform provides a fully branded mobile app
                         to enhance client retention and streamline operations.
                     </p>
@@ -418,82 +416,82 @@ const WelcomePage = () => {
                 </div>
             </div>
             {/* -- Scrolling Logos Section --> */}
-    <>
-    <div class="container mx-auto py-8 text-center relative z-10">
-            <h3 class="text-4xl font-bold">
-                Brands <span class="text-blue-500">Powered By FactorGenie</span>
+
+    <div className="container mx-auto py-8 text-center relative z-10">
+            <h3 className="text-4xl font-bold">
+                Brands <span className="text-blue-500">Powered By FactorGenie</span>
             </h3>
-        </div><div class="overflow-hidden flex space-x-8 mb-10">
-                <div class="flex space-x-8 animate-scroll">
-                    <img src="images/brands/fina.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/lm.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/mf.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/of.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/pcg.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/porter.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/seven.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/tetra.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/thunder.png" class="max-w-40" alt="Logo" />
+        </div><div className="overflow-hidden flex space-x-8 mb-10">
+                <div className="flex space-x-8 animate-scroll">
+                    <img src="images/brands/fina.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/lm.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/mf.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/of.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/pcg.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/porter.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/seven.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/tetra.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/thunder.png" className="max-w-40" alt="Logo" />
                 </div>
                {/* - Duplicate for seamless scrolling --> */}
-                <div class="flex space-x-8 animate-scroll" aria-hidden="true">
-                    <img src="images/brands/fina.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/lm.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/mf.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/of.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/pcg.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/porter.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/seven.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/tetra.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/thunder.png" class="max-w-40" alt="Logo" />
+                <div className="flex space-x-8 animate-scroll" aria-hidden="true">
+                    <img src="images/brands/fina.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/lm.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/mf.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/of.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/pcg.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/porter.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/seven.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/tetra.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/thunder.png" className="max-w-40" alt="Logo" />
                 </div>
             </div>
-            </>
+          
            {/* - Dual Background Section --> */}
-    <section class="w-full flex flex-col md:flex-row">
+    <section className="w-full flex flex-col md:flex-row">
             <div
-                class="w-full md:w-[55%] bg-white p-8 flex justify-center items-center"
+                className="w-full md:w-[55%] bg-white p-8 flex justify-center items-center"
             >
-                <div class="md:mx-20">
-                    <h1 class="text-2xl sm:text-3xl md:text-5xl font-bold">
+                <div className="md:mx-20">
+                    <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold">
                         Free Broker Credit Report Databases
                     </h1>
-                    <p class="mt-4">
+                    <p className="mt-4">
                         Save money on Ansonia costs by using the FactorGenie Broker Credit
                         Report Database
                     </p>
                 </div>
             </div>
             <div
-                class="w-full md:w-[45%] bg-gradient-to-br from-[#1896ef] via-[#fad9c8] to-[#f476a3] p-14 text-center text-white"
+                className="w-full md:w-[45%] bg-gradient-to-br from-[#1896ef] via-[#fad9c8] to-[#f476a3] p-14 text-center text-white"
             >
                 <img
                     src="images/creditbroker.png"
                     alt="Credit Report"
-                    class="w-full md:-ml-32 shadow-lg rounded-lg" />
+                    className="w-full md:-ml-32 shadow-lg rounded-lg" />
             </div>
         </section>
         {/* !-- gray Background Section -- */}
     <section
-            class="w-full flex flex-col md:flex-row bg-gradient-to-t from-gray-200 to-white"
+            className="w-full flex flex-col md:flex-row bg-gradient-to-t from-gray-200 to-white"
         >
-            <div class="w-full md:w-[45%] p-0 text-right">
-                <div class="mobile-frame relative mx-auto overflow-hidden">
+            <div className="w-full md:w-[45%] p-0 text-right">
+                <div className="mobile-frame relative mx-auto overflow-hidden">
                     {/* < />!-- Mobile Frame --> */}
                     <img
                         src="images/phone-frame.png"
                         alt="Phone Frame"
-                        class="w-full h-auto object-cover relative z-10" />
+                        className="w-full h-auto object-cover relative z-10" />
                     {/* < />!-- Changing Image (Inside Screen) --> */}
                     <div
-                        class="absolute top-5 sm:top-6 md:top-8 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
+                        className="absolute top-5 sm:top-6 md:top-8 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
                     >
                         <video
-                            autoplay
+                            autoPlay
                             loop
                             muted
                             playsinline
-                            class="w-full h-full object-top"
+                            className="w-full h-full object-top"
                         >
                             <source src="./images/file.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
@@ -501,11 +499,11 @@ const WelcomePage = () => {
                     </div>
                 </div>
             </div>
-            <div class="w-full md:w-[55%] p-8 md:mr-10 flex flex-col justify-center">
-                <h1 class="text-2xl md:text-4xl font-bold">
+            <div className="w-full md:w-[55%] p-8 md:mr-10 flex flex-col justify-center">
+                <h1 className="text-2xl md:text-4xl font-bold">
                     Real-Time Status Tracking
                 </h1>
-                <p class="mt-4">
+                <p className="mt-4">
                     Stay informed at every step. FactorGenie provides real-time updates on
                     funding requests, so clients always know where they stand—no calls or
                     emails needed.
@@ -513,34 +511,34 @@ const WelcomePage = () => {
             </div>
         </section>
         {/* !--Self-Serve Funding Requests Section --> */}
-    <div class="container mx-auto py-8 text-center">
-            <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold">
-                <span class="text-blue-500">Self-Serve </span>Funding Requests
+    <div className="container mx-auto py-8 text-center">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold">
+                <span className="text-blue-500">Self-Serve </span>Funding Requests
             </h3>
-            <p class="my-4 text-lg px-4">
+            <p className="my-4 text-lg px-4">
                 Funding requests are effortless with in-app document scanning, batch
                 invoicing, and a seamless submission process—all in just a few taps
             </p>
-            <div class="flex flex-col md:flex-row justify-center mt-4 mb-10">
+            <div className="flex flex-col md:flex-row justify-center mt-4 mb-10">
                 {/* < />!-- 3 columns --> */}
-                <div class="w-full md:w-1/3 p-0">
-                    <div class="mobile-frame relative mx-auto">
+                <div className="w-full md:w-1/3 p-0">
+                    <div className="mobile-frame relative mx-auto">
                         {/* < />!-- Mobile Frame --> */}
                         <img
                             src="images/phone-frame.png"
                             alt="Phone Frame"
-                            class="w-full h-auto object-cover relative z-10" />
+                            className="w-full h-auto object-cover relative z-10" />
                         <div
-                            class="absolute top-6 sm:top-8 md:top-6 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
+                            className="absolute top-6 sm:top-8 md:top-6 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
                         >
                             <img
                                 src="./images/94a96b_62383df2a53d415badcba2b0fdeae8d0~mv2.png"
-                                class="w-full object-cover"
+                                className="w-full object-cover"
                                 alt="Mobile Screen" />
                         </div>
                     </div>
-                    <div class="lg:mx-10 mt-2 px-4">
-                        <h3 class="text-xl font-bold">In-App Document Scanning</h3>
+                    <div className="lg:mx-10 mt-2 px-4">
+                        <h3 className="text-xl font-bold">In-App Document Scanning</h3>
                         <p>
                             Scanner autocorrects perspective and lighting for increased
                             document legibility
@@ -548,24 +546,24 @@ const WelcomePage = () => {
                     </div>
                 </div>
                 {/* < />!-- 3 columns --> */}
-                <div class="w-full md:w-1/3 p-0">
-                    <div class="mobile-frame relative mx-auto">
+                <div className="w-full md:w-1/3 p-0">
+                    <div className="mobile-frame relative mx-auto">
                         {/* < />!-- Mobile Frame --> */}
                         <img
                             src="images/phone-frame.png"
                             alt="Phone Frame"
-                            class="w-full h-auto object-cover relative z-10" />
+                            className="w-full h-auto object-cover relative z-10" />
                         <div
-                            class="absolute top-6 sm:top-8 md:top-6 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
+                            className="absolute top-6 sm:top-8 md:top-6 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
                         >
                             <img
                                 src="./images/94a96b_43fab95a1f794632b93321c88a72ce5a~mv2.png"
-                                class="w-full object-cover"
+                                className="w-full object-cover"
                                 alt="Mobile Screen" />
                         </div>
                     </div>
-                    <div class="lg:mx-10 mt-2 px-4">
-                        <h3 class="text-xl font-bold">Streamlined Funding Requests</h3>
+                    <div className="lg:mx-10 mt-2 px-4">
+                        <h3 className="text-xl font-bold">Streamlined Funding Requests</h3>
                         <p>
                             Your clients request load and fuel funding in just a few taps from
                             their mobile device.
@@ -573,24 +571,24 @@ const WelcomePage = () => {
                     </div>
                 </div>
                 {/* < />!-- 3 columns --> */}
-                <div class="w-full md:w-1/3 p-0">
-                    <div class="mobile-frame relative mx-auto overflow-hidden">
+                <div className="w-full md:w-1/3 p-0">
+                    <div className="mobile-frame relative mx-auto overflow-hidden">
                         {/* < />!-- Mobile Frame --> */}
                         <img
                             src="images/phone-frame.png"
                             alt="Phone Frame"
-                            class="w-full h-auto object-cover relative z-10" />
+                            className="w-full h-auto object-cover relative z-10" />
                         <div
-                            class="absolute top-6 sm:top-8 md:top-6 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
+                            className="absolute top-6 sm:top-8 md:top-6 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
                         >
                             <img
                                 src="./images/94a96b_e8f9aceb84b547e88c7a0fd0d7a5034d~mv2.png"
-                                class="w-full object-cover"
+                                className="w-full object-cover"
                                 alt="Mobile Screen" />
                         </div>
                     </div>
-                    <div class="lg:mx-10 mt-2 px-4">
-                        <h3 class="text-xl font-bold">Multiple Load Batching</h3>
+                    <div className="lg:mx-10 mt-2 px-4">
+                        <h3 className="text-xl font-bold">Multiple Load Batching</h3>
                         <p>
                             Enable your clients to easily make multiple funding requests in
                             bulk.
@@ -601,53 +599,53 @@ const WelcomePage = () => {
         </div>
         {/* !-- gray Background Section --> */}
         <section
-            class="w-full flex flex-col md:flex-row bg-gradient-to-t from-white to-gray-200"
+            className="w-full flex flex-col md:flex-row bg-gradient-to-t from-white to-gray-200"
         >
-            <div class="w-full md:w-[55%] p-8 md:ml-14 flex flex-col justify-center">
-                <h1 class="text-2xl md:text-4xl font-bold">
+            <div className="w-full md:w-[55%] p-8 md:ml-14 flex flex-col justify-center">
+                <h1 className="text-2xl md:text-4xl font-bold">
                     Promote In-Network Fueling
                 </h1>
-                <p class="mt-4">
+                <p className="mt-4">
                     Boost fuel card usage and revenue while giving clients the tools they
                     need. FactorGenie’s fuel discount finder helps clients save at
                     preferred locations, while monitoring in-app card usage keeps them in
                     control of their spending.
                 </p>
             </div>
-            <div class="w-full md:w-[45%] p-0 text-center">
-                <div class="mobile-frame relative mx-auto">
+            <div className="w-full md:w-[45%] p-0 text-center">
+                <div className="mobile-frame relative mx-auto">
                     {/* < />!-- Mobile Frame --> */}
                     <img
                         src="images/phone-frame.png"
                         alt="Phone Frame"
-                        class="w-full h-auto object-cover relative z-10" />
+                        className="w-full h-auto object-cover relative z-10" />
                     <div
-                        class="absolute top-5 sm:top-6 md:top-9 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
+                        className="absolute top-5 sm:top-6 md:top-9 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
                     >
                         <img
                             src="./images/94a96b_62383df2a53d415badcba2b0fdeae8d0~mv2.png"
-                            class="w-full object-cover"
+                            className="w-full object-cover"
                             alt="Mobile Screen" />
                     </div>
                 </div>
             </div>
         </section>
         {/* !--Smarter Factoring Section --> */}
-    <div class="container mx-auto py-8 text-center px-4">
-            <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold">
-                More Tools for <span class="text-blue-500"> Smarter Factoring</span>
+    <div className="container mx-auto py-8 text-center px-4">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold">
+                More Tools for <span className="text-blue-500"> Smarter Factoring</span>
             </h3>
-            <p class="my-4 text-lg">
+            <p className="my-4 text-lg">
                 FactorGenie goes beyond funding with powerful features to enhance your
                 service.
             </p>
 
             <div
-                class="w-full flex flex-col md:flex-row justify-center mt-12 gap-6 border-round"
+                className="w-full flex flex-col md:flex-row justify-center mt-12 gap-6 border-round"
             >
                 {/* < />!-- 4 columns --> */}
                 <div
-                    class="w-full md:w-1/2 lg:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg"
+                    className="w-full md:w-1/2 lg:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -655,76 +653,76 @@ const WelcomePage = () => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="#008ff5"
-                        class="w-8 h-8 mx-auto"
+                        className="w-8 h-8 mx-auto"
                     >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
                     </svg>
-                    <h4 class="text-lg font-bold my-3">Reports</h4>
-                    <p class="text-gray-700">
+                    <h4 className="text-lg font-bold my-3">Reports</h4>
+                    <p className="text-gray-700">
                         Clients can easily access multiple reports across all devices.
                     </p>
                 </div>
                 {/* < />!-- 4 columns --> */}
-                <div class="md:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg">
+                <div className="md:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="#008ff5"
-                        class="w-8 h-8 mx-auto"
+                        className="w-8 h-8 mx-auto"
                     >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                     </svg>
-                    <h4 class="text-lg font-bold my-3">Notifications</h4>
-                    <p class="text-gray-700">
+                    <h4 className="text-lg font-bold my-3">Notifications</h4>
+                    <p className="text-gray-700">
                         Keep clients informed with automated push and in-app notifications.
                     </p>
                 </div>
                 {/* < />!-- 4 columns --> */}
-                <div class="md:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg">
+                <div className="md:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="#008ff5"
-                        class="w-8 h-8 mx-auto"
+                        className="w-8 h-8 mx-auto"
                     >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                     </svg>
-                    <h4 class="text-lg font-bold my-3">Load Board</h4>
-                    <p class="text-gray-700">
+                    <h4 className="text-lg font-bold my-3">Load Board</h4>
+                    <p className="text-gray-700">
                         Help clients find new opportunities with loads from your
                         prequalified shippers/brokers.
                     </p>
                 </div>
                 {/* < />!-- 4 columns --> */}
-                <div class="md:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg">
+                <div className="md:w-1/4 bg-white p-4 sm:pt-8 sm:pb-14 px-6 shadow-lg">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="#008ff5"
-                        class="w-8 h-8 mx-auto"
+                        className="w-8 h-8 mx-auto"
                     >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
                     </svg>
-                    <h4 class="text-lg font-bold my-3">Fleet Portal</h4>
-                    <p class="text-gray-700">
+                    <h4 className="text-lg font-bold my-3">Fleet Portal</h4>
+                    <p className="text-gray-700">
                         Clients get full account access through a user-friendly web portal
                         designed for back-office staff.
                     </p>
@@ -732,47 +730,47 @@ const WelcomePage = () => {
             </div>
         </div>
         {/* < /></>!-- Scrolling Logos Section --> */}
-        <>
-    <div class="container mx-auto py-8 text-center">
-            <h3 class="text-4xl font-bold">
-                Connect With Your <span class="text-blue-500"> Essential Tools</span>
+        
+    <div className="container mx-auto py-8 text-center">
+            <h3 className="text-4xl font-bold">
+                Connect With Your <span className="text-blue-500"> Essential Tools</span>
             </h3>
-        </div><div class="overflow-hidden flex space-x-8">
-                <div class="flex space-x-8 animate-scroll">
-                    <img src="images/brands/fina.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/lm.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/mf.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/of.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/pcg.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/porter.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/seven.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/tetra.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/thunder.png" class="max-w-40" alt="Logo" />
+        </div><div className="overflow-hidden flex space-x-8">
+                <div className="flex space-x-8 animate-scroll">
+                    <img src="images/brands/fina.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/lm.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/mf.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/of.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/pcg.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/porter.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/seven.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/tetra.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/thunder.png" className="max-w-40" alt="Logo" />
                 </div>
                 {/* < />!-- Duplicate for seamless scrolling --> */}
-                <div class="flex space-x-8 animate-scroll" aria-hidden="true">
-                    <img src="images/brands/fina.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/lm.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/mf.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/of.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/pcg.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/porter.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/seven.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/tetra.png" class="max-w-40" alt="Logo" />
-                    <img src="images/brands/thunder.png" class="max-w-40" alt="Logo" />
+                <div className="flex space-x-8 animate-scroll" aria-hidden="true">
+                    <img src="images/brands/fina.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/lm.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/mf.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/of.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/pcg.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/porter.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/seven.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/tetra.png" className="max-w-40" alt="Logo" />
+                    <img src="images/brands/thunder.png" className="max-w-40" alt="Logo" />
                 </div>
-            </div><div class="container mx-auto py-8 px-4">
-                <h3 class="text-4xl font-bold text-center">Frequently Asked Questions</h3>
-                <div class="flex flex-col gap-4 mt-10 md:mx-12">
+            </div><div className="container mx-auto py-8 px-4">
+                <h3 className="text-4xl font-bold text-center">Frequently Asked Questions</h3>
+                <div className="flex flex-col gap-4 mt-10 md:mx-12">
                     {/* < />!-- Tab 1 --> */}
                     <div>
                         <button
-                            class="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
+                            className="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
                         >
-                            <span class="font-semibold"
+                            <span className="font-semibold"
                             >Does FactorGenie replace my current FMS factoring software?</span>
                             <svg
-                                class="w-5 h-5 transition-transform transform rotate-0"
+                                className="w-5 h-5 transition-transform transform rotate-0"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -786,7 +784,7 @@ const WelcomePage = () => {
                                 ></path>
                             </svg>
                         </button>
-                        <div class="tab-content hidden p-4 text-gray-700">
+                        <div className="tab-content hidden p-4 text-gray-700">
                             No, we integrate with and upgrade your current Factoring Management
                             System (FMS). You don’t have to migrate your data or retrain your
                             staff.
@@ -797,11 +795,11 @@ const WelcomePage = () => {
                     {/* !-- Tab 2 --> */}
                     <div>
                         <button
-                            class="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
+                            className="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
                         >
-                            <span class="font-semibold">Do you offer a fuel card?</span>
+                            <span className="font-semibold">Do you offer a fuel card?</span>
                             <svg
-                                class="w-5 h-5 transition-transform transform rotate-0"
+                                className="w-5 h-5 transition-transform transform rotate-0"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -815,7 +813,7 @@ const WelcomePage = () => {
                                 ></path>
                             </svg>
                         </button>
-                        <div class="tab-content hidden p-4 text-gray-700">
+                        <div className="tab-content hidden p-4 text-gray-700">
                             No, we integrate any of your existing fuel card programs into your
                             app, increasing your card sign-ups and gallons pumped.
                         </div>
@@ -823,11 +821,11 @@ const WelcomePage = () => {
                     {/* < />!-- Tab 3 --> */}
                     <div>
                         <button
-                            class="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
+                            className="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
                         >
-                            <span class="font-semibold">How soon can I launch my app?</span>
+                            <span className="font-semibold">How soon can I launch my app?</span>
                             <svg
-                                class="w-5 h-5 transition-transform transform rotate-0"
+                                className="w-5 h-5 transition-transform transform rotate-0"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -841,19 +839,19 @@ const WelcomePage = () => {
                                 ></path>
                             </svg>
                         </button>
-                        <div class="tab-content hidden p-4 text-gray-700">
+                        <div className="tab-content hidden p-4 text-gray-700">
                             Most apps are ready to be launched within 5 days.
                         </div>
                     </div>
                     {/* < />!-- Tab 4 --> */}
                     <div>
                         <button
-                            class="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
+                            className="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
                         >
-                            <span class="font-semibold"
+                            <span className="font-semibold"
                             >Do you help me market the app to my clients?</span>
                             <svg
-                                class="w-5 h-5 transition-transform transform rotate-0"
+                                className="w-5 h-5 transition-transform transform rotate-0"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -867,19 +865,19 @@ const WelcomePage = () => {
                                 ></path>
                             </svg>
                         </button>
-                        <div class="tab-content hidden p-4 text-gray-700">
+                        <div className="tab-content hidden p-4 text-gray-700">
                             Yes, we provide landing pages and marketing materials.
                         </div>
                     </div>
                     {/* < />!-- Tab 5 --> */}
                     <div>
                         <button
-                            class="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
+                            className="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
                         >
-                            <span class="font-semibold"
+                            <span className="font-semibold"
                             >Do you provide tutorials to help truckers use the app?</span>
                             <svg
-                                class="w-5 h-5 transition-transform transform rotate-0"
+                                className="w-5 h-5 transition-transform transform rotate-0"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -893,53 +891,53 @@ const WelcomePage = () => {
                                 ></path>
                             </svg>
                         </button>
-                        <div class="tab-content hidden p-4 text-gray-700">
+                        <div className="tab-content hidden p-4 text-gray-700">
                             Sure, but it's so simple, you won't need them!
                         </div>
                     </div>
                 </div>
             </div>
             {/* < /></>!-- Dual Background Section --> */}
-    <section class="w-full flex flex-col md:flex-row">
+    <section className="w-full flex flex-col md:flex-row">
             <div
-                class="w-full md:w-1/2 bg-white p-8 text-center flex flex-col justify-center items-center"
+                className="w-full md:w-1/2 bg-white p-8 text-center flex flex-col justify-center items-center"
             >
-                <h1 class="text-5xl font-bold lg:mx-10">
+                <h1 className="text-5xl font-bold lg:mx-10">
                     See Your Custom App In Action
                 </h1>
-                <p class="my-4 font-semibold">
+                <p className="my-4 font-semibold">
                     Contact us to schedule a demo of FactorGenie
                 </p>
                 <a
                     href="#"
-                    class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
+                    className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600"
                 >Demo Your App</a>
             </div>
-            <div class="w-full md:w-1/2 custom-gradient p-0 text-center text-white">
-                <div class="mobile-frame relative mx-auto overflow-hidden">
+            <div className="w-full md:w-1/2 custom-gradient p-0 text-center text-white">
+                <div className="mobile-frame relative mx-auto overflow-hidden">
                     {/* < />!-- Mobile Frame --> */}
                     <img
                         src="images/phone-frame.png"
                         alt="Phone Frame"
-                        class="w-full h-auto object-cover relative z-10" />
+                        className="w-full h-auto object-cover relative z-10" />
 
                     {/* < />!-- Changing Image (Inside Screen) --> */}
                     <div
-                        class="absolute top-5 sm:top-6 md:top-9 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
+                        className="absolute top-5 sm:top-6 md:top-9 left-1/2 transform -translate-x-1/2 w-[43%] md:w-[43.5%] overflow-hidden z-0 rounded-lg"
                     >
                         <img
                             id="mobileImage"
                             src="./images/94a96b_360d0498c2514ff2a08edd0a3e8c2cbb~mv2.png"
-                            class="w-full object-cover"
+                            className="w-full object-cover"
                             alt="Mobile Screen" />
                     </div>
                 </div>
             </div>
-        </section><footer class="px-4 lg:px-8 flex flex-col md:flex-row gap-5 mt-12 pb-10">
-                <div class="w-full md:w-1/1 p-4">
+        </section><footer className="px-4 lg:px-8 flex flex-col md:flex-row gap-5 mt-12 pb-10">
+                <div className="w-full md:w-1/1 p-4">
                     {/* < />!-- Logo --> */}
                     <svg
-                        class="logo w-52 mb-6"
+                        className="logo w-52 mb-6"
                         preserveAspectRatio="xMidYMid meet"
                         data-bbox="0 0 456.82 52.14"
                         viewBox="0 0 456.82 52.14"
@@ -1009,20 +1007,19 @@ const WelcomePage = () => {
                     </svg>
                     <p>© 2025 FactorGenie</p>
                 </div>
-                <div class="w-full md:w-1/4 flex flex-col px-4">
+                <div className="w-full md:w-1/4 flex flex-col px-4">
                     {/* < />!-- links --> */}
                     <a href="index.html">Home</a>
                     <a href="integrations.html">Integrations</a>
                     <a href="#">Contact </a>
                     <a href="#">Schedule a Demo </a>
                 </div>
-                <div class="w-full md:w-1/4 flex flex-col px-4">
+                <div className="w-full md:w-1/4 flex flex-col px-4">
                     <a href="#">Terms & Conditions </a>
                     <a href="#">Privacy Policy</a>
                 </div>
             </footer>
             </>
-           
   );
 }
 
