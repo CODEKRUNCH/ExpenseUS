@@ -9,6 +9,7 @@ import Crypto from './CryptoVault/Cryptovault';
 import PersonalWallet from './Pages/PersonalWallet';
 import ProtectedRoute from "./Components/protectedpath"
 import { AuthProvider } from './Components/Authorization/iauthenticated';
+import BudgetScreen from './Pages/budgetscreen';
 
 // Layout component that includes the Navbar
 function NavbarLayout() {
@@ -34,6 +35,14 @@ function App() {
         <Route path="/login" element={<ProfitPathLogin />} />
         <Route path="/signup" element={<ExpenseUsSignup />} />
         
+        <Route path="/" element={<ProfitPathHome/>} />
+          {/* Regular Paths without the default path  */}
+          <Route path="/dashboard" element={<ProfitPathHome/>} />
+          <Route path="/cryptovault" element={<Crypto />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/personalwallet" element={<PersonalWallet />} />
+          <Route path="/budgeting" element={<BudgetScreen/>}/>
+          
         {/* Routes with Navbar */}
         <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
          {/* Default Path of none Selected */}
