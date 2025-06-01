@@ -1,14 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/sideBar'; // Assuming your sidebar component
 import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Unused, but keeping for consistency with your original code
 import { LuPlus } from "react-icons/lu"; // Plus icon for "Add new" button
 import { IoClose } from "react-icons/io5"; // Close icon for the modal
-
+import { createTransaction } from '../api/transactionstore';
+import { TransactionRetrieve } from "../api/transactionsretrieve";
+import TransactionsTable from '../Components/transactiontable';
 const Transactions = () => {
+
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+ 
+  const [amount,setAmount]= useState('');
+  const [payer,setPayer]=useState('');
+  const [note,setNote]=useState('');
+
+  const [transactionType,setTransactionType]=useState('');
+  const [category,setCategory]=useState('');
+  const [paymentType,setPaymentType]=useState('');
+ 
+  const [fromWallet,setFromWallet]= useState('');
+  const [dateTime,setDateTime]= useState('');
+
+    const [transactions, setTransactions] = useState([]); // state for transactions
+  
+ const handleTransactionCreate = async(e) =>
+ {
+  e.preventDefault();
+  // Check if any field is empty or not valid
+  if (
+    !amount || 
+    !transactionType || 
+    !category || 
+    !paymentType || 
+    !payer || 
+    !fromWallet || 
+    !dateTime || 
+    !note
+  ) {
+    alert('Please fill out all fields.');
+    return;
+  }
+  try{
+    const transactionData=await createTransaction( Number(amount) ,
+    transactionType,
+    category ,
+    paymentType,  
+    payer ,
+    fromWallet, 
+    dateTime, 
+    note)
+    console.log("Transaction Success",transactionData)
+
+    setTransactions(prevTransactions => [...prevTransactions, transactionData]);
+  // 🆕 Optionally reset the form
+    setAmount('');
+    setTransactionType('');
+    setCategory('');
+    setPaymentType('');
+    setPayer('');
+    setFromWallet('');
+    setDateTime('');
+    setNote('');
+
+    setIsModalOpen(false);
+
+  }
+  catch(error)
+  {
+   console.error("Transaction failed", error);
+  }
+
+ };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -21,34 +86,22 @@ const Transactions = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   // Dummy transaction data
-  const transactions = [
-    {
-      id: 1,
-      date: '2025-03-24',
-      amount: '$5,000.00',
-      paymentType: 'Cash',
-      type: 'Expense',
-      category: 'Food & Drinks',
-    },
-    {
-      id: 2,
-      date: '2025-02-01',
-      amount: '$5,000.00',
-      paymentType: 'Cash',
-      type: 'Income',
-      category: 'Others',
-    },
-    {
-      id: 3,
-      date: '2025-01-31',
-      amount: '$5,000.00',
-      paymentType: 'Cash',
-      type: 'Income',
-      category: 'Shopping',
-    },
-  ];
+  
+
+ 
+  useEffect(()=>{
+      const handleTransactionsRetrieve = async () => {
+      try {
+          const user = await TransactionRetrieve();
+          console.log("Retrieval successful", user);
+          setTransactions(user);
+      } catch (error) {
+          console.error("Retrieval failed", error);
+      }
+      };
+      handleTransactionsRetrieve();
+    },[])
 
   return (
     <div className='flex text-white bg-[#080F25] min-h-screen'>
@@ -88,64 +141,13 @@ const Transactions = () => {
             </button>
           </div>
         </div>
-
-        {/* Transactions Table */}
-        <div className='p-4 flex-grow'>
-          <div className='bg-[#0B1739] rounded-lg p-4'>
-            <table className='min-w-full table-auto'>
-              <thead>
-                <tr className='border-b border-gray-700 text-gray-400 text-sm'>
-                  <th className='px-4 py-2 text-left w-10'>
-                    <input type='checkbox' className='form-checkbox bg-gray-800 border-gray-600 rounded' />
-                  </th>
-                  <th className='px-4 py-2 text-left'>Date</th>
-                  <th className='px-4 py-2 text-left'>Amount</th>
-                  <th className='px-4 py-2 text-left'>Payment type</th>
-                  <th className='px-4 py-2 text-left'>Type</th>
-                  <th className='px-4 py-2 text-left'>Category</th>
-                  <th className='px-4 py-2 text-left'></th> {/* For the three dots */}
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((transaction) => (
-                  <tr key={transaction.id} className='border-b border-gray-800'>
-                    <td className='px-4 py-3'>
-                      <input type='checkbox' className='form-checkbox bg-gray-800 border-gray-600 rounded' />
-                    </td>
-                    <td className='px-4 py-3'>{transaction.date}</td>
-                    <td className='px-4 py-3'>{transaction.amount}</td>
-                    <td className='px-4 py-3'>{transaction.paymentType}</td>
-                    <td className={`px-4 py-3 font-semibold ${transaction.type === 'Expense' ? 'text-red-500' : 'text-green-500'}`}>
-                      {transaction.type}
-                    </td>
-                    <td className='px-4 py-3'>{transaction.category}</td>
-                    <td className='px-4 py-3'>...</td> {/* Three dots */}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* Pagination/Selection Footer */}
-            <div className='flex justify-between items-center mt-4 text-sm text-gray-400'>
-              <span>0 of {transactions.length} row(s) selected.</span>
-              <div className='flex items-center space-x-2'>
-                <button className='px-2 py-1 bg-gray-800 rounded-md border border-gray-600'>&lt;</button>
-                <span>1 of 1</span>
-                <button className='px-2 py-1 bg-gray-800 rounded-md border border-gray-600'>&gt;</button>
-                <select className='px-2 py-1 bg-gray-800 rounded-md border border-gray-600 focus:outline-none'>
-                  <option>10</option>
-                  <option>25</option>
-                  <option>50</option>
-                </select>
-              </div>
-            </div>
-          </div>
+        {/* //location of the component */}
+        <TransactionsTable transactions={transactions}/>
         </div>
-      </div>
 
       {/* Add New Transaction Modal */}
       {isModalOpen && (
-        <div className='fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50'>
+        <div className='fixed inset-0 bg-black/50 flex justify-center items-center z-50'>
           <div className='bg-[#0B1739] p-6 rounded-lg shadow-xl w-[550px] relative'>
             <div className='flex justify-between items-center border-b border-gray-700 pb-3 mb-4'>
               <div>
@@ -156,14 +158,16 @@ const Transactions = () => {
                 <IoClose size={24} />
               </button>
             </div>
-
-            <form className='grid grid-cols-2 gap-x-6 gap-y-4 text-sm'>
+            
+            <form onSubmit={handleTransactionCreate} className='grid grid-cols-2 gap-x-6 gap-y-4 text-sm'>
               {/* Row 1 */}
               <div>
                 <label htmlFor='amount' className='block text-gray-300 font-medium mb-1'>Amount</label>
                 <input
                   type='number'
                   id='amount'
+                  value={amount}
+                  onChange={(e)=>setAmount(e.target.value)}
                   placeholder='0'
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 />
@@ -173,6 +177,8 @@ const Transactions = () => {
                 <label htmlFor='transactionType' className='block text-gray-300 font-medium mb-1'>Transaction type</label>
                 <select
                   id='transactionType'
+                  value={transactionType}
+                  onChange={(e)=>setTransactionType(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>Income</option>
@@ -184,6 +190,8 @@ const Transactions = () => {
                 <label htmlFor='category' className='block text-gray-300 font-medium mb-1'>Category</label>
                 <select
                   id='category'
+                  value={category}
+                  onChange={(e)=>setCategory(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>Category</option>
@@ -201,6 +209,8 @@ const Transactions = () => {
                 <label htmlFor='paymentType' className='block text-gray-300 font-medium mb-1'>Payment type</label>
                 <select
                   id='paymentType'
+                  value={paymentType}
+                  onChange={(e)=>setPaymentType(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>Cash</option>
@@ -210,10 +220,12 @@ const Transactions = () => {
                 <p className='text-xs text-gray-500 mt-1'>Choose category.</p>
               </div>
               <div>
-                <label htmlFor='payer' className='block text-gray-300 font-medium mb-1'>Payer</label>
+                <label htmlFor='payedto' className='block text-gray-300 font-medium mb-1'>Payed To:</label>
                 <input
                   type='text'
-                  id='payer'
+                  id='payedto'
+                  value={payer}
+                  onChange={(e)=>setPayer(e.target.value)}
                   placeholder='Name of the person or entity.'
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 />
@@ -223,6 +235,8 @@ const Transactions = () => {
                 <label htmlFor='fromWallet' className='block text-gray-300 font-medium mb-1'>From wallet</label>
                 <select
                   id='fromWallet'
+                  value={fromWallet}
+                  onChange={(e)=>setFromWallet(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
                   <option>From wallet</option>
@@ -236,9 +250,10 @@ const Transactions = () => {
               <div className='col-span-1'> {/* Make Date span one column */}
                 <label htmlFor='date' className='block text-gray-300 font-medium mb-1'>Date</label>
                 <input
-                  type='date'
+                  type='datetime-local'
                   id='date'
-                  defaultValue='2025-05-24' // Default to today's date
+                  value={dateTime}
+                  onChange={(e)=>setDateTime(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF] date-input-icon'
                 />
                 <p className='text-xs text-gray-500 mt-1'>Select a date.</p>
@@ -248,6 +263,8 @@ const Transactions = () => {
                 <input
                   type='text'
                   id='note'
+                  value={note}
+                  onChange={(e)=>setNote(e.target.value)}
                   placeholder='Add a note.'
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 />

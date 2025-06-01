@@ -368,7 +368,7 @@ function ConnectWallet() {
                                             <button
                                                 onClick={depositToContract}
                                                 disabled={isLoading || !depositAmount}
-                                                className="w-full bg hover:bg-[#0B1739] disabled:bg-gray-800 text-white py-2 px-4 rounded-md font-semibold text-sm transition-colors cursor-pointer mt-2"
+                                                className="w-full bg-gray-800 hover:bg-[#0B1739] disabled:bg-gray-800 text-white py-2 px-4 rounded-md font-semibold text-sm transition-colors cursor-pointer mt-2"
                                             >
                                                 {isLoading ? "Depositing..." : "Deposit ETH"}
                                             </button>

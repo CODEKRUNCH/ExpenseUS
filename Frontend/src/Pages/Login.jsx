@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import loginUser from '../api/loginservice';
+import { useAuth } from '../Components/Authorization/iauthenticated';
 
 const ProfitPathLogin = () => {
   const [email, setEmail] = useState('');
   const [isvalidEmail, SetisValidEmail] = useState(false);
+   const { checkAuth } = useAuth();
   const navigate = useNavigate();
   // this checks for the email validitiy and check each time a new email is written
   useEffect(()=>{
@@ -17,10 +20,33 @@ const ProfitPathLogin = () => {
   useEffect(()=>{
     SetisValidPassword(password.length>=8);
   },[password])
+
+
+
+const handlelogin = async (e) => {
+  e.preventDefault();
+  console.log("Login button clicked!", email, password);
+  
+  if (!isvalidEmail || !isvalidPassword) {
+    console.warn("Invalid email or password");
+    return;
+  }
+
+  try {
+    const user = await loginUser(email, password);
+    console.log("Login successful", user);
+    await checkAuth();
+    navigate('/dashboard');
+  } catch (error) {
+    console.error("Login failed", error);
+  }
+};
+
+
   return (
         <div>
         <div className='bg-cover'>
-          <img src="../public/images/chatgpt-image.png" alt="" />
+    
         </div>
         <div className='lg:flex lg:flex-row lg:justify-end'>
         <div className="bg-gray-50 flex flex-col justify-end py-2 sm:px-6 lg:px-8">
@@ -41,7 +67,7 @@ const ProfitPathLogin = () => {
                 </p>
               </div>
 
-              <form className="space-y-6">
+              <form className="space-y-6"  onSubmit={handlelogin}>
                 <div>
                   <label htmlFor="email" className="flex justify-items-start text-sm font-medium text-gray-700">
                     Email Here
