@@ -1,0 +1,28 @@
+/* Make static ranges scrollable */
+.custom-date-range-picker .rdrStaticRanges {
+  overflow-y: auto;
+  max-height: 320px; /* Adjust height as needed */
+}
+
+/* Optional: Style scrollbar */
+.custom-date-range-picker .rdrStaticRanges::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-date-range-picker .rdrStaticRanges::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.custom-date-range-picker .rdrStaticRanges::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.custom-date-range-picker .rdrStaticRanges::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* Curvy edges for the entire calendar */
+.custom-date-range-picker {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}

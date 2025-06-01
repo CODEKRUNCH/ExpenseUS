@@ -1,12 +1,11 @@
 import React, { useEffect,useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis';
 import '../css/home.css'
+import NavbarHome from '../Components/NavbarHome';
 const WelcomePage = () => {
-  const navigate = useNavigate();
- const [openMenu, setOpenMenu] = useState(false); // React state
+
   gsap.registerPlugin(ScrollTrigger);
     const animationContainer = useRef(null);
   const mobileImageRef = useRef(null);
@@ -161,149 +160,8 @@ const WelcomePage = () => {
 
   return (
     <>
-      <header
-      className="flex justify-between items-center shadow-md rounded-full p-3 mx-4 fixed top-5 left-0 right-0 z-20 bg-white/90 backdrop-blur-sm"
-    >
-      <div className="container mx-auto flex justify-between items-center">
-        {/* <!-- Logo --> */}
-        <a href="index.html" className="logo w-48 py-1">
-          <svg
-            preserveAspectRatio="xMidYMid meet"
-            data-bbox="0 0 456.82 52.14"
-            viewBox="0 0 456.82 52.14"
-            xmlns="http://www.w3.org/2000/svg"
-            data-type="color"
-            role="presentation"
-            aria-hidden="true"
-            aria-label=""
-          >
-            <g>
-              <path
-                d="M8.84 1.03h30.33l-.83 4.64H13.51l-3.23 18.3h21.39l-.83 4.64H9.46L5.51 51.1H0z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M54.04.69h5.33L69.62 51.1h-5.54l-7.43-39.06c-.16-.87-.3-1.73-.43-2.56-.13-.84-.22-1.67-.29-2.49h-.34c-.34.83-.72 1.66-1.12 2.49s-.83 1.69-1.29 2.56L31.83 51.1h-5.71zM38.7 33.01h24.55l.93 4.57H36.12z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M77.48 24.66c1.4-7.84 4.43-13.91 9.1-18.21Q93.57 0 102.42 0c8.85 0 9.8 1.57 12.55 4.71q4.125 4.71 3.3 12l-.03.34h-5.5l.03-.34c.37-3.58-.37-6.46-2.22-8.65s-4.84-3.29-8.99-3.29c-4.36 0-8.24 1.69-11.66 5.07s-5.7 8.32-6.84 14.81l-.48 2.82c-1.12 6.33-.58 11.22 1.63 14.68s5.51 5.19 9.89 5.19 7.73-1.19 10.25-3.58c2.52-2.38 4.22-5.17 5.09-8.36l.1-.34h5.5l-.1.34c-1.28 4.66-3.75 8.6-7.41 11.85-3.66 3.24-8.42 4.87-14.29 4.87s-10.42-2.14-13.58-6.41c-3.16-4.28-4.05-10.36-2.65-18.24l.48-2.82Z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M123.99 1.03h38.51l-.83 4.64h-16.5l-8.01 45.43h-5.5l8.01-45.43h-16.51z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M161.73 24.66c1.4-7.84 4.43-13.91 9.1-18.21S180.9 0 187.04 0s10.76 2.15 13.93 6.45c3.16 4.3 4.05 10.37 2.65 18.21l-.48 2.82c-1.38 7.84-4.4 13.91-9.08 18.21q-7.02 6.45-16.2 6.45c-9.18 0-10.79-2.15-13.94-6.45s-4.04-10.37-2.66-18.21l.48-2.82Zm6.74 17.48c2.2 3.47 5.62 5.21 10.25 5.21s8.63-1.74 12.05-5.21c3.43-3.47 5.69-8.36 6.79-14.67l.48-2.82c1.12-6.31.58-11.19-1.63-14.67-2.21-3.47-5.61-5.21-10.2-5.21s-8.66 1.74-12.09 5.21-5.7 8.36-6.83 14.67l-.48 2.82c-1.1 6.31-.55 11.19 1.65 14.67Z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M216.9 1.03h15.89c5.3 0 9.12 1.32 11.47 3.96s3.13 6.17 2.35 10.59-2.81 7.98-6.1 10.66-7.58 4.02-12.88 4.02h-10.39l-3.68 20.84h-5.5zm11.52 24.66c4.06 0 7.06-.96 9.01-2.89s3.17-4.33 3.68-7.22c.5-2.89.12-5.27-1.15-7.15s-3.94-2.82-7.99-2.82h-10.39l-3.54 20.08zm.49 2.3 5.36-.65 8.6 23.76h-5.78z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M251.41 24.52c1.45-8.21 4.66-14.34 9.65-18.4S272.1.03 279.23.03c6.53 0 11.44 1.51 14.72 4.54s4.4 6.96 3.37 11.8l-.14.55h-13.27l.07-.41c.39-2.06.02-3.7-1.1-4.92s-3.12-1.82-5.98-1.82-5.23 1-7.29 2.99c-2.06 2-3.49 5.31-4.3 9.94l-1.2 6.74c-.85 4.82-.46 8.19 1.17 10.13q2.445 2.91 7.29 2.91c1.53 0 2.88-.17 4.02-.5 1.15-.33 2.33-.88 3.54-1.63l1.27-7.08h-7.87l1.65-9.42h20.84l-3.68 20.8c-2.2 1.86-5.1 3.57-8.7 5.12-3.6 1.56-7.86 2.34-12.79 2.34-7.64 0-13.23-2.03-16.78-6.09s-4.62-10.19-3.2-18.4l.55-3.1Z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M306.79 1.03h35.25l-1.72 9.73h-22.21l-1.75 9.83h19.09l-1.68 9.52h-19.09l-1.96 11.31h22.59l-1.72 9.66h-35.63l8.84-50.07Z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M348.83 1.03h14.03l9.94 28.4a20.4 20.4 0 0 1 .89 3.92h.27c.09-.83.18-1.52.28-2.1.09-.57.21-1.27.34-2.1l4.99-28.13h10.9l-8.84 50.07h-14.44l-9.77-27.96c-.25-.69-.42-1.35-.5-1.98s-.17-1.35-.26-2.15h-.27c-.09.83-.19 1.61-.29 2.34q-.15 1.095-.39 2.34l-4.82 27.41h-10.9l8.84-50.07Z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M399.44 1.03h13.17l-8.84 50.07H390.6z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-              <path
-                d="M421.57 1.03h35.25l-1.72 9.73h-22.21l-1.75 9.83h19.09l-1.68 9.52h-19.09l-1.96 11.31h22.59l-1.72 9.66h-35.63l8.84-50.07Z"
-                fill="#008ff5"
-                data-color="1"
-              ></path>
-            </g>
-          </svg>
-        </a>
-        {/* <!-- Desktop Menu --> */}
-        <nav className="hidden md:flex space-x-6 items-center text-black">
-          <a href="index.html" className="hover:text-blue-500">Features</a>
-          <a href="integrations.html" className="hover:text-blue-500"
-            >Integrations</a
-          >
-          <a href="#" className="hover:text-blue-500">Contact Us</a>
-          <a href="#" className="hover:text-blue-500">Pricing</a>
-          <a
-            href="#"
-            className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
-            >Demo Your App</a
-          >
-        </nav>
-
-        {/* <!-- Mobile Menu Button --> */}
- 
- <div className="md:hidden flex items-center">
-      <button
-        onClick={() => setOpenMenu(!openMenu)} // React click handler
-        className="text-gray-700 focus:outline-none"
-      >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </button>
-
-      {/* Conditionally render mobile menu */}
-      {openMenu && (
-        <div>
-          {/* Your mobile menu content  */}
-            {/* Mobile Menu */}
-        <div
-          x-show="openMenu"
-          x-transition
-          className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md mt-2 py-2"
-        >
-          <a
-            href="index.html"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-          >Features</a>
-          <a
-            href="integrations.html"
-            className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-          >Integrations</a>
-          <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Contact Us</a>
-          <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Pricing</a>
-          <a
-            href="#"
-            className="block bg-blue-500 text-white text-center px-4 py-2 rounded-full hover:bg-blue-600"
-          >Demo Your App</a>
-        </div>
-        </div>
-      )}
-    </div>
-  {/* {block of code missing}  */}
-      </div>
-</header>
+     
+     <NavbarHome/>
       {/* Hero Section */}
       <section className="hero custom-gradient w-full min-h-screen pt-24 md:pt-24">
         <div className="container mx-auto flex flex-col">
@@ -315,7 +173,7 @@ const WelcomePage = () => {
               <h4 className="text-black font-semibold text-1xl sm:text-2xl mb-6">
                   White Labeled for Your Company
               </h4>
-              <a href="#" className="mt-4 bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-blue-600 transition">Demo Your App</a>
+              <a href="#" className="mt-4 bg-purple-600 text-white px-8 py-3 rounded-full hover:bg-purple-700 transition">Get Started Now</a>
           </div>
 
           {/* Mobile Screen Section */}
@@ -325,11 +183,11 @@ const WelcomePage = () => {
                       className="bg-white md:w-[320px] h-full absolute top-24 left-1/2 -translate-x-1/2 rounded-3xl mt-20 hidden md:block"
                       id="factoringApp"
                   >
-                      <p className="text-center mt-10">Your Factoring App</p>
+                      <p className="text-center mt-10">Your Expensing App</p>
                   </div>
 
                   <img
-                      src="public/images/fuelcardbalance.png"
+                      src="/images/fuelcardbalance.png"
                       alt="Fuel Card Balance"
                       className="rounded-lg drop-shadow-xl shadow-[0px_-2px_15px_rgba(0,0,0,0.2)] w-40 absolute -top-32 left-24 hidden md:block"
                       id="fuelCard" />
@@ -384,7 +242,7 @@ const WelcomePage = () => {
                   </div>
                   <div className="w-full md:w-1/3 p-4 hidden lg:block lg:mr-12 text-lg">
                       <p className="mb-4">
-                          FactorGenie's white-label platform provides a fully branded mobile
+                          ExpenseUS white-label platform provides a fully branded mobile
                           app to enhance client retention and streamline operations.
                       </p>
                       <p>
@@ -406,7 +264,7 @@ const WelcomePage = () => {
                 </div>
                 <div className="w-full">
                     <p className="mb-4">
-                        FactorGenie’s white-label platform provides a fully branded mobile app
+                        ExpenseUS white-label platform provides a fully branded mobile app
                         to enhance client retention and streamline operations.
                     </p>
                     <p>
@@ -419,7 +277,7 @@ const WelcomePage = () => {
 
     <div className="container mx-auto py-8 text-center relative z-10">
             <h3 className="text-4xl font-bold">
-                Brands <span className="text-blue-500">Powered By FactorGenie</span>
+                Brands <span className="text-blue-500">Powered By ExpenseUS</span>
             </h3>
         </div><div className="overflow-hidden flex space-x-8 mb-10">
                 <div className="flex space-x-8 animate-scroll">
@@ -457,7 +315,7 @@ const WelcomePage = () => {
                         Free Broker Credit Report Databases
                     </h1>
                     <p className="mt-4">
-                        Save money on Ansonia costs by using the FactorGenie Broker Credit
+                        Save money on Ansonia costs by using the ExpenseUS Broker Credit
                         Report Database
                     </p>
                 </div>
@@ -504,7 +362,7 @@ const WelcomePage = () => {
                     Real-Time Status Tracking
                 </h1>
                 <p className="mt-4">
-                    Stay informed at every step. FactorGenie provides real-time updates on
+                    Stay informed at every step. ExpenseUS provides real-time updates on
                     funding requests, so clients always know where they stand—no calls or
                     emails needed.
                 </p>
@@ -607,7 +465,7 @@ const WelcomePage = () => {
                 </h1>
                 <p className="mt-4">
                     Boost fuel card usage and revenue while giving clients the tools they
-                    need. FactorGenie’s fuel discount finder helps clients save at
+                    need. ExpenseUS fuel discount finder helps clients save at
                     preferred locations, while monitoring in-app card usage keeps them in
                     control of their spending.
                 </p>
@@ -633,10 +491,10 @@ const WelcomePage = () => {
         {/* !--Smarter Factoring Section --> */}
     <div className="container mx-auto py-8 text-center px-4">
             <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-                More Tools for <span className="text-blue-500"> Smarter Factoring</span>
+                More Tools for <span className="text-blue-500"> Smarter Financing</span>
             </h3>
             <p className="my-4 text-lg">
-                FactorGenie goes beyond funding with powerful features to enhance your
+                ExpenseUS goes beyond funding with powerful features to enhance your
                 service.
             </p>
 
@@ -768,7 +626,7 @@ const WelcomePage = () => {
                             className="bg-blue-500 rounded-2xl w-full text-left py-3 px-4 flex justify-between items-center focus:outline-none tab-btn"
                         >
                             <span className="font-semibold"
-                            >Does FactorGenie replace my current FMS factoring software?</span>
+                            >Does ExpenseUS replace my current FMS factoring software?</span>
                             <svg
                                 className="w-5 h-5 transition-transform transform rotate-0"
                                 fill="none"
@@ -785,8 +643,8 @@ const WelcomePage = () => {
                             </svg>
                         </button>
                         <div className="tab-content hidden p-4 text-gray-700">
-                            No, we integrate with and upgrade your current Factoring Management
-                            System (FMS). You don’t have to migrate your data or retrain your
+                            No, we integrate with and upgrade your current Expense Management
+                            System (EMS). You don’t have to migrate your data or retrain your
                             staff.
                         </div>
                     </div>
@@ -906,7 +764,7 @@ const WelcomePage = () => {
                     See Your Custom App In Action
                 </h1>
                 <p className="my-4 font-semibold">
-                    Contact us to schedule a demo of FactorGenie
+                    Contact us to schedule a demo of ExpenseUS
                 </p>
                 <a
                     href="#"
@@ -1005,7 +863,7 @@ const WelcomePage = () => {
                             ></path>
                         </g>
                     </svg>
-                    <p>© 2025 FactorGenie</p>
+                    <p>© 2025 ExpenseUS</p>
                 </div>
                 <div className="w-full md:w-1/4 flex flex-col px-4">
                     {/* < />!-- links --> */}

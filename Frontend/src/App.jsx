@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import ProfitPathLogin from './Pages/Login';
 import ExpenseUsSignup from './Pages/SignUp';
-import Navbar from './Components/navbar';
 import './App.css';
 import ProfitPathHome from './Pages/Home';
 import Transactions from './Pages/Transactions';
@@ -10,6 +9,7 @@ import PersonalWallet from './Pages/PersonalWallet';
 import ProtectedRoute from "./Components/protectedpath"
 import { AuthProvider } from './Components/Authorization/iauthenticated';
 import BudgetScreen from './Pages/budgetscreen';
+import WelcomePage from './Pages/Welcome';
 
 // Layout component that includes the Navbar
 function NavbarLayout() {
@@ -34,21 +34,14 @@ function App() {
         {/* Auth routes without Navbar */}
         <Route path="/login" element={<ProfitPathLogin />} />
         <Route path="/signup" element={<ExpenseUsSignup />} />
-        
-        <Route path="/" element={<ProfitPathHome/>} />
-          {/* Regular Paths without the default path  */}
-          <Route path="/dashboard" element={<ProfitPathHome/>} />
-          <Route path="/cryptovault" element={<Crypto />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/personalwallet" element={<PersonalWallet />} />
-          <Route path="/budgeting" element={<BudgetScreen/>}/>
-          
+         <Route path="/home" element={<WelcomePage/>} />
+         <Route path="/dashboard" element={<ProfitPathHome/>} />
+         <Route path="/budgeting" element={<BudgetScreen/>}/>
         {/* Routes with Navbar */}
         <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
          {/* Default Path of none Selected */}
          <Route path="/" element={<ProfitPathHome/>} />
           {/* Regular Paths without the default path  */}
-          <Route path="/dashboard" element={<ProfitPathHome/>} />
           <Route path="/cryptovault" element={<Crypto />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/personalwallet" element={<PersonalWallet />} />
