@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import ConnectWallet from './connectwallet';
 import { FaBitcoin, FaWallet } from 'react-icons/fa';
+import { MdAccountBalanceWallet } from 'react-icons/md';
 
 const Sidebar = ({ onClose }) => {
   const navigate = useNavigate();
@@ -114,6 +115,15 @@ const Sidebar = ({ onClose }) => {
           <AiFillStar className="mr-2 text-[#A0AEC0] text-sm" />
           Transaction Records
         </li>
+
+<li
+  className="flex items-center px-4 py-2 cursor-pointer hover:bg-[#2D3748] w-full text-xs"
+  onClick={() => handleSectionClick('budgeting','/budgeting')}
+>
+  {/* Replace AiFillStar with your chosen icon */}
+  <MdAccountBalanceWallet className="mr-2 text-[#A0AEC0] text-sm" />
+  Budgeting
+</li>
 
         <li className="flex items-center px-4 py-2 cursor-pointer hover:bg-[#2D3748] w-full text-xs">
           <BsPeopleFill className="mr-2 text-[#A0AEC0] text-sm" />

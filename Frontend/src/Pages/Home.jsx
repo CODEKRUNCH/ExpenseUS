@@ -1,6 +1,6 @@
 import React, { PureComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/sideBar';
+import Sidebar from '../Components/sideBar';
 import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Import download icon
 import DashboardUpperMetrics from '../components/DashboardMetric';
 import Example from '../components/Graph';
