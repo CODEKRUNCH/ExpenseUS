@@ -1,34 +1,103 @@
-import { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import React, { useEffect, useState, useRef } from "react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot } from "recharts";
 
-const data = [
-  { name: 'Jan', value: 400 },
-  { name: 'Feb', value: 500 },
-  { name: 'Mar', value: 550 },
-  { name: 'Apr', value: 500 },
-  { name: 'May', value: 450 },
-  { name: 'June', value: 500 },
-  { name: 'July', value: 600 },
-  { name: 'July', value: 550 },
-  { name: 'July', value: 600 },
-  { name: 'July', value: 550 },
-  { name: 'July', value: 600 },
-  { name: 'July', value: 550 },
-];
+const TAIL_LENGTH = 50;
 
-export default function CryptoCharts() {
+const CryptoChart = () => {
+  const [data, setData] = useState(Array.from({ length: TAIL_LENGTH }, (_, i) => ({
+    name: `${i}s`,
+    value: 0,
+  })));
+  const buffer = useRef([]);
+
+  useEffect(() => {
+    const ws = new WebSocket("wss://stream.binance.com:9443/ws/ethusdt@trade");
+
+    ws.onmessage = (event) => {
+      const price = parseFloat(JSON.parse(event.data).p);
+      buffer.current.push(price);
+    };
+
+    const interval = setInterval(() => {
+      if (buffer.current.length > 0) {
+        const avg =
+          buffer.current.reduce((sum, val) => sum + val, 0) / buffer.current.length;
+        buffer.current = [];
+
+        setData((prev) => {
+          const newData = [...prev.slice(1), { name: `${prev.length}s`, value: avg }];
+          return newData;
+        });
+      }
+    }, 500); // Smooth head movement every 0.5s
+
+    return () => {
+      ws.close();
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
-    <>
-    <div className='px-4 py-5 flex flex-col items-center'><h1 className='text-white font-bold'>Crypto Price Action</h1>
-    <LineChart width={400} height={300} data={data}>
-      <CartesianGrid strokeDasharray="0 9" />
-      <XAxis tick={{ fill: "White", fontSize: 14 }} />
-      <YAxis tick={{ fill: "White", fontSize: 14 }} />
-      <Tooltip />
-      <Legend />
-      <Line type="monotone" dataKey="value" stroke="cyan" />
-    </LineChart>
+    <div className="flex flex-col items-center px-2 py-9">
+      <LineChart width={550} height={280} data={data}>
+
+        <CartesianGrid strokeDasharray="0.2, 1" />
+        <XAxis dataKey="name" hide />
+        <YAxis domain={["auto", "auto"]} />
+        <Tooltip
+          content={({ active, payload }) => {
+            if (active && payload && payload.length) {
+              return (
+                <div
+                  style={{
+                    backgroundColor: "black",
+                    border: "0px solid #00ffcc",
+                    padding: "3px",
+                    borderRadius: "2px",
+                    color: "#abb2b9",
+                    fontSize: "10px"
+                  }}
+                >
+                  <p>ETH: ${payload[0].value.toFixed(2)}</p>
+                </div>
+              );
+            }
+            return null;
+          }}
+          cursor={false}
+        />
+
+        {data.length > 0 && (
+          <ReferenceDot
+            x={data[data.length - 1].name}
+            y={data[data.length - 1].value}
+            r={6}
+            fill="lime"
+            stroke="black"
+            strokeWidth={1.5}
+            label={{
+              value: `$${data[data.length - 1].value.toFixed(2)}`,
+              position: "top",
+              fill: "white",
+              fontSize: 12,
+            }}
+          />
+        )}
+
+
+        <Line
+          type="basis"
+          dataKey="value"
+          stroke="CYAN"
+          dot={false}
+          isAnimationActive={true}
+          animationDuration={500}
+        />
+
+      </LineChart>
+      <p className="flex flex-col items-center mt-2 ml-17 text-gray-400 p-2 border border-gray-600 rounded-md">Ethereum</p>
     </div>
-  </>
   );
-}
+};
+
+export default CryptoChart;

@@ -20,36 +20,36 @@ function NavbarLayout() {
     </>
   );
 }
-function Logout()
-{
+function Logout() {
   localStorage.clear();
-  return <Navigate to="/login/"/>
+  return <Navigate to="/login/" />
 }
 
 function App() {
   return (
     <AuthProvider>
-    <Router>
-      <Routes>
-        {/* Auth routes without Navbar */}
-        <Route path="/login" element={<ProfitPathLogin />} />
-        <Route path="/signup" element={<ExpenseUsSignup />} />
-         <Route path="/home" element={<WelcomePage/>} />
-         <Route path="/dashboard" element={<ProfitPathHome/>} />
-         <Route path="/budgeting" element={<BudgetScreen/>}/>
-        {/* Routes with Navbar */}
-        <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
-         {/* Default Path of none Selected */}
-         <Route path="/" element={<ProfitPathHome/>} />
-          {/* Regular Paths without the default path  */}
+      <Router>
+        <Routes>
+          {/* Auth routes without Navbar */}
+          <Route path="/login" element={<ProfitPathLogin />} />
+          <Route path="/signup" element={<ExpenseUsSignup />} />
+          <Route path="/home" element={<WelcomePage />} />
+          <Route path="/dashboard" element={<ProfitPathHome />} />
+          <Route path="/budgeting" element={<BudgetScreen />} />
           <Route path="/cryptovault" element={<Crypto />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/personalwallet" element={<PersonalWallet />} />
-          <Route path="/logout" element={<Logout />} />
-          {/* Add your other routes that need Navbar here */}
-        </Route>
-      </Routes>
-    </Router>
+
+          {/* Routes with Navbar */}
+          <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
+            {/* Default Path of none Selected */}
+            <Route path="/" element={<ProfitPathHome />} />
+            {/* Regular Paths without the default path  */}
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="/personalwallet" element={<PersonalWallet />} />
+            <Route path="/logout" element={<Logout />} />
+            {/* Add your other routes that need Navbar here */}
+          </Route>
+        </Routes>
+      </Router>
     </AuthProvider>
   );
 }
