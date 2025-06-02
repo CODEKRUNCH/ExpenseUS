@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import './CryptoVault.css';
+import CryptoCharts from "../Components/CryptoGraph";
 
 function ConnectWallet() {
     const [walletAddress, setWalletAddress] = useState("");
@@ -320,6 +321,7 @@ function ConnectWallet() {
 
     return (
         <>
+            {/* <CryptoCharts/> */}
             {isOwner && (
                 <div className="flex flex-col items-center mt-2 ml-[40%] border w-[20%] bg-[#0B1739] border-green-200 p-2 rounded-md">
                     <p className="text-sm text-green-300 font-semibold">✓ You are the contract owner</p>

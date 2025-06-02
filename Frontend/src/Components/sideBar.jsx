@@ -6,6 +6,7 @@ import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import ConnectWallet from './connectwallet';
 import { FaBitcoin, FaWallet } from 'react-icons/fa';
 import { MdAccountBalanceWallet } from 'react-icons/md';
+import { MdLogout } from 'react-icons/md';
 
 const Sidebar = ({ onClose }) => {
   const navigate = useNavigate();
@@ -145,6 +146,10 @@ const Sidebar = ({ onClose }) => {
       <div className="mt-auto px-0 w-full">
         <hr className="border-[#4A5568] mb-4" />
 
+      <div className="flex items-center px-4 py-2 cursor-pointer hover:bg-[#2D3748] w-full text-xs">
+        <MdLogout className="mr-2 text-[#A0AEC0] text-sm" />
+        Logout
+      </div>
         <div className="flex items-center px-4 py-2 cursor-pointer hover:bg-[#2D3748] w-full text-xs">
           <BsGearFill className="mr-2 text-[#A0AEC0] text-sm" />
           Settings

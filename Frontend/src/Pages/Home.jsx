@@ -1,20 +1,216 @@
-import React, { PureComponent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Sidebar from '../Components/sideBar';
-import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Import download icon
+import React, { useState ,useEffect} from 'react';
+import Sidebar from '../components/sideBar';
+import { AiOutlineDownload ,AiOutlineDown} from 'react-icons/ai';
 import DashboardUpperMetrics from '../components/DashboardMetric';
+import { addDays, startOfDay,format, startOfMonth, endOfMonth, startOfYear, endOfYear, subMonths, subYears, startOfQuarter, endOfQuarter, startOfWeek, endOfWeek } from 'date-fns';
 import Example from '../components/Graph';
-
+import { DateRangePicker } from 'react-date-range';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import '../css/datepicker.css'
 const ProfitPathHome = () => {
-  const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Set initial state to true
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [state, setState] = useState([
+    {
+      startDate: addDays(new Date(), -7),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  ]);
+  
+ 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+     
+  
+  //format text of range in the Button
+   const formatDateRange = () => {
+    const start = state[0].startDate;
+    const end = state[0].endDate;
+    
+    if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+      return `${format(start, 'MMM d')}–${format(end, 'd, yyyy')}`;
+    }
+    return `${format(start, 'MMM d')} – ${format(end, 'MMM d, yyyy')}`;
+  };
+
+
+const customStaticRanges = [
+  {
+    label: 'Last 7 Days',
+    range: () => ({
+      startDate: addDays(new Date(), -7),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedStart = addDays(new Date(), -7);
+      const definedEnd = new Date();
+      return (
+        range.startDate.getTime() === definedStart.getTime() &&
+        range.endDate.getTime() === definedEnd.getTime()
+      );
+    },
+  },
+  {
+    label: 'Last 30 Days',
+    range: () => ({
+      startDate: addDays(new Date(), -30),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedStart = addDays(new Date(), -30);
+      const definedEnd = new Date();
+      return (
+        range.startDate.getTime() === definedStart.getTime() &&
+        range.endDate.getTime() === definedEnd.getTime()
+      );
+    },
+  },
+  {
+    label: 'Last 90 Days',
+    range: () => ({
+      startDate: addDays(new Date(), -90),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedStart = addDays(new Date(), -90);
+      const definedEnd = new Date();
+      return (
+        range.startDate.getTime() === definedStart.getTime() &&
+        range.endDate.getTime() === definedEnd.getTime()
+      );
+    },
+  },
+  {
+    label: 'Last 365 Days',
+    range: () => ({
+      startDate: addDays(new Date(), -365),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedStart = addDays(new Date(), -365);
+      const definedEnd = new Date();
+      return (
+        range.startDate.getTime() === definedStart.getTime() &&
+        range.endDate.getTime() === definedEnd.getTime()
+      );
+    },
+  },
+  {
+    label: 'Last Month',
+    range: () => {
+      const start = startOfMonth(subMonths(new Date(), 1));
+      const end = endOfMonth(subMonths(new Date(), 1));
+      return { startDate: start, endDate: end };
+    },
+    isSelected(range) {
+      const start = startOfMonth(subMonths(new Date(), 1));
+      const end = endOfMonth(subMonths(new Date(), 1));
+      return (
+        range.startDate.getTime() === start.getTime() &&
+        range.endDate.getTime() === end.getTime()
+      );
+    },
+  },
+  {
+    label: 'Last 12 Months',
+    range: () => ({
+      startDate: startOfMonth(subMonths(new Date(), 11)),
+      endDate: endOfMonth(new Date()),
+    }),
+    isSelected(range) {
+      const start = startOfMonth(subMonths(new Date(), 11));
+      const end = endOfMonth(new Date());
+      return (
+        range.startDate.getTime() === start.getTime() &&
+        range.endDate.getTime() === end.getTime()
+      );
+    },
+  },
+  {
+    label: 'Last Year',
+    range: () => {
+      const start = startOfYear(subYears(new Date(), 1));
+      const end = endOfYear(subYears(new Date(), 1));
+      return { startDate: start, endDate: end };
+    },
+    isSelected(range) {
+      const start = startOfYear(subYears(new Date(), 1));
+      const end = endOfYear(subYears(new Date(), 1));
+      return (
+        range.startDate.getTime() === start.getTime() &&
+        range.endDate.getTime() === end.getTime()
+      );
+    },
+  },
+  {
+    label: 'Week to Date',
+    range: () => ({
+      startDate: startOfWeek(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const start = startOfWeek(new Date());
+      const end = new Date();
+      return (
+        range.startDate.getTime() === start.getTime() &&
+        range.endDate.getTime() === end.getTime()
+      );
+    },
+  },
+  {
+    label: 'Month to Date',
+    range: () => ({
+      startDate: startOfMonth(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const start = startOfMonth(new Date());
+      const end = new Date();
+      return (
+        range.startDate.getTime() === start.getTime() &&
+        range.endDate.getTime() === end.getTime()
+      );
+    },
+  },
+  {
+    label: 'Year to Date',
+    range: () => ({
+      startDate: startOfYear(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const start = startOfYear(new Date());
+      const end = new Date();
+      return (
+        range.startDate.getTime() === start.getTime() &&
+        range.endDate.getTime() === end.getTime()
+      );
+    },
+  },
+  {
+    label: 'Quarter to Date',
+    range: () => ({
+      startDate: startOfQuarter(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const start = startOfQuarter(new Date());
+      const end = new Date();
+      return (
+        range.startDate.getTime() === start.getTime() &&
+        range.endDate.getTime() === end.getTime()
+      );
+    },
+  },
+ 
+];
+
   return (
-    <div className='flex text-white bg-[#080F25] min-h-screen'>
+    <div className="flex text-white bg-[#080F25] min-h-screen relative">
       {/* Sidebar */}
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
@@ -23,116 +219,97 @@ const ProfitPathHome = () => {
           flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
-          marginLeft: isSidebarOpen ? '200px' : '0', // Shift content when sidebar is open
+          marginLeft: isSidebarOpen ? '200px' : '0',
           transition: 'margin-left 0.3s ease-in-out',
+          position: 'relative',  // <-- Make this a positioned parent
+          zIndex: 0,
         }}
       >
-        {/* Top Bar */}
-        <div
-          style={{
-            display: 'flex',
-              alignItems: 'center',
-            padding: '15px',
-            backgroundColor: '#080F25',
-          }}
-        >
-          {/* Welcome Text */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '5px' }}>Welcome back, Bablu Boxer</h2>
-            <p style={{ fontSize: '14px', color: '#CBD5E0' }}>Measure your Expenses and Track Your Finances.</p>
-          </div>
-
-          {/* Right Side Buttons */}
-          <div>
-          <div className='flex'>
-            <button
-              style={{
-                backgroundColor: 'transparent',
-                border: '1px solid #4A5568',
-                color: '#CBD5E0',
-                padding: '10px 15px',
-                borderRadius: '6px',
-                marginRight: '16px',
-                marginLeft: '580px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                fontSize: '14px',
-              }}
-            >
-              Export data <AiOutlineDownload style={{ marginLeft: '5px' }} />
-            </button>
-            <button
-              style={{
-                backgroundColor: '#A33AFF',
-                color: 'white',
-                padding: '10px 15px',
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 'bold',
-              }}
-            >
-              Create report
-            </button>
-           </div>
-          </div>
-        </div>
-
-          {/* Your Existing Content */}
-        
-        
-        <div className=" h-screen p-2 w-full flex text-white bg-[#080F25] justify-center gap-3">
-     <div className="grid h-110 w-280 grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 grid-rows-4 gap-4">
-
-
-                        <DashboardUpperMetrics
-          innerheader="Current Balance"
-          cashval="50.8K"
-          grosspercent="28.4"
-                              />
-                        <DashboardUpperMetrics
-          innerheader="Monthly Spending"
-          cashval="100.8K"
-          grosspercent="30.4"
-                        />
-                        <DashboardUpperMetrics
-          innerheader="Budget Utilization"
-          cashval="50%"
-                      />
-                        
-              
-                        <DashboardUpperMetrics
-          innerheader="Savings"
-          cashval="40.8K"
-          grosspercent="-30.4"
-                />
-      
-       <div >
-         <div>
-          <div className='flex pb-2 flex-row gap-4'>
-          <button className='px-2 py-1 bg-[#0B1739] radius rounded-sm whitespace-nowrap'>Last 12 months</button>
-          <button className='px-2 py-1 bg-[#0B1739] radius rounded-sm whitespace-nowrap'>Compare to</button>
-
-          </div>
-          
-          <div style={{ 
-              width: '100%', 
-              height: '400px',
-              minWidth: '600px'  // Add minimum width
-            }} >    
-          <Example /> 
-          <div>hello</div>
-            </div>
-              </div>
-                </div>
-
-            </div>
-        </div>
-
-    
+         {/* Top Bar */}
+  <div className="flex items-center p-4 bg-[#080F25]">
+    <div className="flex flex-col">
+      <h2 className="text-2xl font-bold mb-1">Welcome back, Bablu Boxer</h2>
+      <p className="text-sm text-[#CBD5E0]">
+        Measure your Expenses and Track Your Finances.
+      </p>
     </div>
+
+    <div className="flex ml-auto">
+      <button className="flex items-center text-sm border border-indigo-500 text-indigo-300 hover:bg-indigo-900/30 px-4 py-2 rounded-md mr-4">
+        Export data <AiOutlineDownload className="ml-1" />
+      </button>
+      <button className="bg-[#A33AFF] text-white text-sm font-bold px-4 py-2 rounded-md">
+        Create report
+      </button>
+    </div>
+        </div>
+
+        {/* Date Range Button */}
+    <div className="flex items-center ml-10 mb-3 relative">
+          <button
+            onClick={() => setIsPickerOpen(!isPickerOpen)}
+            className="flex items-center gap-2 px-3 py-1  rounded-lg font-medium cursor-pointer transition-all hover:opacity-90 border border-indigo-500 text-indigo-300 hover:bg-indigo-900/30 shadow-[0_4px_12px_rgba(163,58,255,0.25)] hover:shadow-[0_6px_15px_rgba(163,58,255,0.3)]"
+          >
+            <span>{formatDateRange()}</span>
+            <AiOutlineDown className={`transition-transform duration-200 ${isPickerOpen ? 'rotate-180' : ''}`} />
+          </button>
+         {isPickerOpen && (
+                  <div
+                    className="fixed top-31.5 left-58 bg-white rounded-lg shadow-lg z-50 border-white text-black"
+                    style={{ minWidth: '600px' }}
+                  >
+                    <DateRangePicker
+                      onChange={(item) => setState([item.selection])}
+                      showSelectionPreview={true}
+                      moveRangeOnFirstSelection={false}
+                      months={2}
+                      ranges={state}
+                      direction="horizontal"
+                      preventSnapRefocus={true}
+                      calendarFocus="backwards"
+                      staticRanges={customStaticRanges}
+                      className="custom-date-range-picker" // Add this class name
+                      maxDate={new Date()}
+                    />
+                  </div>
+                )}
+
+        </div>
+
+        {/* Dashboard & Graph */}
+        <div className="h-screen p-2 w-full flex text-white bg-[#080F25] justify-center gap-3">
+          <div className="grid h-110 w-280 grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 grid-rows-4 gap-4">
+            
+            
+            <DashboardUpperMetrics
+              innerheader="Current Balance"
+              cashval="50.8K"
+              grosspercent="28.4"
+            />
+            <DashboardUpperMetrics
+              innerheader="Monthly Spending"
+              cashval="100.8K"
+              grosspercent="30.4"
+            />
+            <DashboardUpperMetrics innerheader="Budget Utilization" cashval="50%" />
+            <DashboardUpperMetrics
+              innerheader="Savings"
+              cashval="40.8K"
+              grosspercent="-30.4"
+            />
+
+            <div
+              style={{
+                width: '100%',
+                height: '400px',
+                minWidth: '600px',
+              }}
+            >
+              <Example />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
