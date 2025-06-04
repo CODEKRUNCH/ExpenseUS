@@ -3,7 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot } f
 
 const TAIL_LENGTH = 50;
 
-const CryptoChart = () => {
+const EthChart = () => {
   const [data, setData] = useState(Array.from({ length: TAIL_LENGTH }, (_, i) => ({
     name: `${i}s`,
     value: 0,
@@ -29,7 +29,7 @@ const CryptoChart = () => {
           return newData;
         });
       }
-    }, 500); // Smooth head movement every 0.5s
+    }, 500); // Smooth head movement every 1s
 
     return () => {
       ws.close();
@@ -38,12 +38,11 @@ const CryptoChart = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center px-2 py-9">
-      <LineChart width={550} height={280} data={data}>
-
-        <CartesianGrid strokeDasharray="0.2, 1" />
+    <div className="mt-3 mr-2">
+      <LineChart width={79} height={80} data={data}>
+        <CartesianGrid strokeDasharray="0.1, 10" />
         <XAxis dataKey="name" hide />
-        <YAxis domain={["auto", "auto"]} />
+        <YAxis domain={["auto", "auto"]} hide />
         <Tooltip
           content={({ active, payload }) => {
             if (active && payload && payload.length) {
@@ -83,8 +82,6 @@ const CryptoChart = () => {
             }}
           />
         )}
-
-
         <Line
           type="basis"
           dataKey="value"
@@ -93,11 +90,9 @@ const CryptoChart = () => {
           isAnimationActive={true}
           animationDuration={500}
         />
-
       </LineChart>
-      <p className="flex flex-col items-center mt-2 ml-17 text-gray-400 p-2 border border-gray-600 rounded-md">Ethereum</p>
     </div>
   );
 };
 
-export default CryptoChart;
+export default EthChart;
