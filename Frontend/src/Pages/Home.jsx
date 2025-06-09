@@ -244,43 +244,44 @@ const customStaticRanges = [
     </div>
         </div>
 
-        {/* Date Range Button */}
-    <div className="flex items-center ml-10 mb-3 relative">
-          <button
-            onClick={() => setIsPickerOpen(!isPickerOpen)}
-            className="flex items-center gap-2 px-3 py-1  rounded-lg font-medium cursor-pointer transition-all hover:opacity-90 border border-indigo-500 text-indigo-300 hover:bg-indigo-900/30 shadow-[0_4px_12px_rgba(163,58,255,0.25)] hover:shadow-[0_6px_15px_rgba(163,58,255,0.3)]"
-          >
-            <span>{formatDateRange()}</span>
-            <AiOutlineDown className={`transition-transform duration-200 ${isPickerOpen ? 'rotate-180' : ''}`} />
-          </button>
-         {isPickerOpen && (
-                  <div
-                    className="fixed top-31.5 left-58 bg-white rounded-lg shadow-lg z-50 border-white text-black"
-                    style={{ minWidth: '600px' }}
-                  >
-                    <DateRangePicker
-                      onChange={(item) => setState([item.selection])}
-                      showSelectionPreview={true}
-                      moveRangeOnFirstSelection={false}
-                      months={2}
-                      ranges={state}
-                      direction="horizontal"
-                      preventSnapRefocus={true}
-                      calendarFocus="backwards"
-                      staticRanges={customStaticRanges}
-                      className="custom-date-range-picker" // Add this class name
-                      maxDate={new Date()}
-                    />
-                  </div>
-                )}
 
-        </div>
 
         {/* Dashboard & Graph */}
         <div className="h-screen p-2 w-full flex text-white bg-[#080F25] justify-center gap-3">
           <div className="grid h-110 w-280 grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 grid-rows-4 gap-4">
-            
-            
+
+            {/* DateRangePicker Button - Full Width */}
+    <div className="col-span-12 row-end-1 m-0 p-0">
+      <div className="relative ">
+        <button
+          onClick={() => setIsPickerOpen(!isPickerOpen)}
+          className="flex items-center gap-2 px-3 py-1 rounded-lg font-medium cursor-pointer transition-all hover:opacity-90 border border-indigo-500 text-indigo-300 hover:bg-indigo-900/30 shadow-[0_4px_12px_rgba(163,58,255,0.25)] hover:shadow-[0_6px_15px_rgba(163,58,255,0.3)]"
+        >
+          <span>{formatDateRange()}</span>
+          <AiOutlineDown className={`transition-transform duration-200 ${isPickerOpen ? 'rotate-180' : ''}`} />
+        </button>
+        {isPickerOpen && (
+          <div className="absolute left-0 bg-white rounded-lg shadow-lg z-50 border-white text-black mt-2">
+            <DateRangePicker
+              onChange={(item) => setState([item.selection])}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={2}
+              ranges={state}
+              direction="horizontal"
+              preventSnapRefocus={true}
+              calendarFocus="backwards"
+              staticRanges={customStaticRanges}
+              className="custom-date-range-picker"
+              maxDate={new Date()}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+
+
+
             <DashboardUpperMetrics
               innerheader="Current Balance"
               cashval="50.8K"
@@ -298,15 +299,12 @@ const customStaticRanges = [
               grosspercent="-30.4"
             />
 
-            <div
-              style={{
-                width: '100%',
-                height: '400px',
-                minWidth: '600px',
-              }}
-            >
-              <Example />
-            </div>
+    
+    {/* Graph - Full Width or Controlled */}
+    <div className="col-span-6" style={{ height: '400px', minWidth: '600px' }}>
+      <Example />
+    </div>
+    
           </div>
         </div>
       </div>

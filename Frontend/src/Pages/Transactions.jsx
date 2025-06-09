@@ -17,15 +17,33 @@ const Transactions = () => {
   const [payer,setPayer]=useState('');
   const [note,setNote]=useState('');
 
-  const [transactionType,setTransactionType]=useState('');
-  const [category,setCategory]=useState('');
-  const [paymentType,setPaymentType]=useState('');
+  const [transactionType,setTransactionType]=useState('Income');
+  const [category,setCategory]=useState('Select Category');
+  const [paymentType,setPaymentType]=useState('Cash');
  
-  const [fromWallet,setFromWallet]= useState('');
+  const [fromWallet,setFromWallet]= useState('Main Wallet');
   const [dateTime,setDateTime]= useState('');
 
-    const [transactions, setTransactions] = useState([]); // state for transactions
+  const [transactions, setTransactions] = useState([]); // state for transactions
   
+  const incomeCategories = [
+  "Salary",
+  "Investments",
+  "Freelance",
+  "Gifts",
+  "Others"
+];
+
+const expenseCategories = [
+  "Food & Drinks",
+  "Shopping",
+  "Utilities",
+  "Transport",
+  "Rent",
+  "Entertainment",
+  "Others"
+];
+
  const handleTransactionCreate = async(e) =>
  {
   e.preventDefault();
@@ -55,13 +73,14 @@ const Transactions = () => {
     console.log("Transaction Success",transactionData)
 
     setTransactions(prevTransactions => [...prevTransactions, transactionData]);
-  // 🆕 Optionally reset the form
+  //  Optionally reset the form
+  //  Reset the form fields to defaults
     setAmount('');
-    setTransactionType('');
-    setCategory('');
-    setPaymentType('');
+    setTransactionType('Income');
+    setCategory('Select Category');  // or any default category for Income
+    setPaymentType('Cash');
     setPayer('');
-    setFromWallet('');
+    setFromWallet('Main Wallet');
     setDateTime('');
     setNote('');
 
@@ -189,18 +208,19 @@ const Transactions = () => {
               <div>
                 <label htmlFor='category' className='block text-gray-300 font-medium mb-1'>Category</label>
                 <select
-                  id='category'
-                  value={category}
-                  onChange={(e)=>setCategory(e.target.value)}
-                  className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
-                >
-                  <option>Category</option>
-                  <option>Food & Drinks</option>
-                  <option>Shopping</option>
-                  <option>Utilities</option>
-                  <option>Transport</option>
-                  <option>Others</option>
-                </select>
+                    id='category'
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
+                  >
+                    <option value=''>Select category</option>
+                    {(transactionType === "Income" ? incomeCategories : expenseCategories).map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+
                 <p className='text-xs text-gray-500 mt-1'>Choose category.</p>
               </div>
 

@@ -37,13 +37,14 @@ function App() {
          <Route path="/home" element={<WelcomePage/>} />
          <Route path="/dashboard" element={<ProfitPathHome/>} />
          <Route path="/budgeting" element={<BudgetScreen/>}/>
+            <Route path="/transactions" element={<Transactions />} />
         {/* Routes with Navbar */}
         <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
          {/* Default Path of none Selected */}
          <Route path="/" element={<ProfitPathHome/>} />
           {/* Regular Paths without the default path  */}
           <Route path="/cryptovault" element={<Crypto />} />
-          <Route path="/transactions" element={<Transactions />} />
+       
           <Route path="/personalwallet" element={<PersonalWallet />} />
           <Route path="/logout" element={<Logout />} />
           {/* Add your other routes that need Navbar here */}
