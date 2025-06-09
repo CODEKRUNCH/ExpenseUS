@@ -20,10 +20,9 @@ function NavbarLayout() {
     </>
   );
 }
-function Logout()
-{
+function Logout() {
   localStorage.clear();
-  return <Navigate to="/login/"/>
+  return <Navigate to="/login/" />
 }
 
 function App() {
