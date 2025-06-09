@@ -4,10 +4,10 @@ const BudgetForm = ({ onClose }) =>{
     const [budgetName, setBudgetName] = useState('');
     const [budgetAmount, setBudgetAmount] = useState(0);
     const [budgetCategory, setBudgetCategory] = useState('Food & Drinks'); // Default from image
-    const [budgetWallet, setBudgetWallet] = useState('For wallet'); // Default from image
+    const [budgetWallet, setBudgetWallet] = useState('Primary'); // Default from image
     const [budgetPeriod, setBudgetPeriod] = useState('Month'); // Default from image
-    const categories = ['Total','Food & Drinks', 'Transportation', 'Utilities', 'Rent', 'Entertainment', 'Shopping'];
-    const wallets = ['For wallet', 'Main Account', 'Credit Card', 'Savings'];
+    const categories = ['Total','Food & Drinks', 'Transport', 'Groceries' , 'Utilities', 'Rent' , 'Health', 'Entertainment', 'Shopping','Other'];
+    const wallets = [ 'Primary', 'Savings'];
     const periods = ['Month', 'Year', 'Week'];
 
 const handleSubmit = async(e) => {
@@ -17,6 +17,7 @@ const handleSubmit = async(e) => {
         try{
             const BudgetData=await CreateBudget(budgetName,
                 budgetAmount,
+                budgetWallet,
                 budgetCategory,
                 budgetPeriod
             )
@@ -30,7 +31,7 @@ const handleSubmit = async(e) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
             <div className="bg-[#1A202C] p-8 rounded-lg shadow-xl max-w-md w-full text-white">
                 <div className="flex justify-between items-center mb-6">
                     <h3 className="text-xl font-bold">Creating a New Budget</h3>

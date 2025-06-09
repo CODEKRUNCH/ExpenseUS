@@ -8,11 +8,20 @@ from django.contrib.auth.models import User
 
 
 class Wallet(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    WALLET_TYPES = [
+        ('Primary', 'Primary'),
+        ('Savings', 'Savings'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # allow multiple wallets
+    type = models.CharField(max_length=20,default='Primary', choices= WALLET_TYPES)
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
+    class Meta:
+        unique_together = ('user', 'type')  # Only one of each type per user
+
     def __str__(self):
-        return f"{self.user.username}'s Wallet"
+        return f"{self.user.username}'s {self.type} Wallet"
 class Budget(models.Model):
     PERIOD_CHOICES=[
         ('Week', 'Week'),
@@ -21,11 +30,14 @@ class Budget(models.Model):
     ]
 
     CATEGORY_CHOICES = [
+        ('Total','Total'),
         ('Food & Drinks', 'Food & Drinks'),
         ('Entertainment', 'Entertainment'),
         ('Groceries', 'Groceries'),
+        ('Rent','Rent'),
         ('Utilities', 'Utilities'),
         ('Transport', 'Transport'),
+        ('Shopping','Shopping'),
         ('Health', 'Health'),
         ('Other', 'Other'),
     ]
@@ -86,12 +98,25 @@ class Transactionrecord(models.Model):
     Note=models.CharField(null=True)
     def __str__(self):
         return self.Payedto
+
     def save(self, *args, **kwargs):
         if not self.pk:  # Only for new transactions
+            try:
+                target_wallet = Wallet.objects.get(user=self.user, type=self.FromWallet)
+            except Wallet.DoesNotExist:
+                if self.TransactionType.lower() == 'income':
+                    # Create wallet with 0 balance first
+                    target_wallet = Wallet.objects.create(user=self.user, type=self.FromWallet, balance=0)
+                else:
+                    raise ValueError(f"{self.FromWallet} wallet does not exist for this user")
+
             if self.TransactionType.lower() == 'expense':
-                self.user.wallet.balance -= self.Amount
+                target_wallet.balance -= self.Amount
             elif self.TransactionType.lower() == 'income':
-                self.user.wallet.balance += self.Amount
-            self.user.wallet.save()
+                target_wallet.balance += self.Amount
+
+            target_wallet.save()
+
         super().save(*args, **kwargs)
+
 

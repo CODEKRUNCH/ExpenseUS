@@ -32,36 +32,43 @@ class TransactionListView(generics.ListAPIView):
             return self.get_paginated_response(data)
         serializer=self.get_serializer(queryset,many=True)
         return Response(serializer.data)
-class Balanceview(APIView):
+class BalanceView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self,request):
-        try:
-            wallet,created=Wallet.objects.get_or_create(user=request.user)
-            serializer= WalletSerializer(wallet)
-            return Response(serializer.data)
-        except Wallet.DoesNotExist:
-            return Response({'detail':'Wallet not Found'},status=404)
+    def get(self, request):
+        wallets = Wallet.objects.filter(user=request.user)
+        data = {}
+
+        for wallet in wallets:
+            data[wallet.type] = {
+                "balance": str(wallet.balance)
+            }
+
+        return Response(data)
 class BudgetCreateView(APIView):
-    serializer_class=BudgetSerializer
+    serializer_class = BudgetSerializer
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        try:
-            wallet=Wallet.objects.get(user=request.user)
-        except Wallet.doesnotexist:
-            return Response({"detail": "No wallet found for this user."}, status=status.HTTP_400_BAD_REQUEST)
+        wallet_type = request.data.get('wallet_type', 'Primary')  # default to Primary wallet
 
-        serializer = self.serializer_class(data=request.data, context={'request': request})  # << important
+        try:
+            wallet = Wallet.objects.get(user=request.user, type=wallet_type)
+        except Wallet.DoesNotExist:
+            return Response({"detail": f"No {wallet_type} wallet found for this user."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(wallet=wallet)  # manually set wallet
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class BudgetListView(APIView):
     serializer_class = BudgetSerializer
     permission_classes = [IsAuthenticated]
     def get(self,request):
-        # get only budgets of the logged in useruseruser
+        # get only budgets of the logged in user
         user=request.user
         budgets = Budget.objects.filter(user=user)
         # Optional: filter only active budgets

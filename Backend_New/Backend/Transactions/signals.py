@@ -6,5 +6,5 @@ from .models import Wallet
 @receiver(post_save, sender=User)
 def create_wallets(sender, instance, created, **kwargs):
     if created:
-        Wallet.objects.create(user=instance, type='Main')
+        Wallet.objects.create(user=instance, type='Primary')
         Wallet.objects.create(user=instance, type='Savings')

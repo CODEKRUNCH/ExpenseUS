@@ -21,7 +21,7 @@ const Transactions = () => {
   const [category,setCategory]=useState('Select Category');
   const [paymentType,setPaymentType]=useState('Cash');
  
-  const [fromWallet,setFromWallet]= useState('Main Wallet');
+  const [fromWallet,setFromWallet]= useState('Primary');
   const [dateTime,setDateTime]= useState('');
 
   const [transactions, setTransactions] = useState([]); // state for transactions
@@ -80,7 +80,7 @@ const expenseCategories = [
     setCategory('Select Category');  // or any default category for Income
     setPaymentType('Cash');
     setPayer('');
-    setFromWallet('Main Wallet');
+    setFromWallet('Primary');
     setDateTime('');
     setNote('');
 
@@ -259,9 +259,8 @@ const expenseCategories = [
                   onChange={(e)=>setFromWallet(e.target.value)}
                   className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:border-[#A33AFF]'
                 >
-                  <option>From wallet</option>
-                  <option>Main Wallet</option>
-                  <option>Savings Account</option>
+                  <option>Primary</option>
+                  <option>Savings</option>
                 </select>
                 <p className='text-xs text-gray-500 mt-1'>Choose wallet.</p>
               </div>
