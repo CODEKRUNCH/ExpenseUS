@@ -1,6 +1,8 @@
 import React,{useEffect,useState} from "react";
 import { MdMoreHoriz } from 'react-icons/md';
-const TransactionsTable=({transactions})=>{
+const TransactionsTable=({
+  transactions
+})=>{
  {/* Transactions Table */}
  const [openMenuId, setOpenMenuId] = useState(null);
 
@@ -23,6 +25,7 @@ const TransactionsTable=({transactions})=>{
               </th>
               <th className="px-4 py-2 text-left">Date</th>
               <th className="px-4 py-2 text-left">Amount</th>
+              <th className="px-4 py-2 text-left">Payed To</th>
               <th className="px-4 py-2 text-left">Payment type</th>
               <th className="px-4 py-2 text-left">Type</th>
               <th className="px-4 py-2 text-left">Category</th>
@@ -43,6 +46,7 @@ const TransactionsTable=({transactions})=>{
                   {transaction.DateandTimePayed?.split("T")[0]}
                 </td>
                 <td className="px-4 py-3">{transaction.Amount}</td>
+                <td className="px-4 py-3">{transaction.Payedto}</td>
                 <td className="px-4 py-3">{transaction.PaymentType}</td>
                 <td
                   className={`px-4 py-3 font-semibold ${

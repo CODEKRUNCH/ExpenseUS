@@ -1,23 +1,29 @@
 import React, { PureComponent } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
-const data = [
-  { name: 'Jan', expenses: 25, savings: 15 },
-  { name: 'Feb', expenses: 50, savings: 30 },
-  { name: 'Mar', expenses: 75, savings: 45 },
-  { name: 'Apr', expenses: 20, savings: 60 },
-  { name: 'May', expenses: 125, savings: 75 },
-  { name: 'Jun', expenses: 150, savings: 90 },
-  { name: 'Jul', expenses: 200, savings: 105 },
-  { name: 'Aug', expenses: 200, savings: 120 },
-  { name: 'Sep', expenses: 225, savings: 135 },
-  { name: 'Oct', expenses: 240, savings: 150 },
-  { name: 'Nov', expenses: 230, savings: 165 },
-  { name: 'Dec', expenses: 250, savings: 180 }
-];
 
 export default class FinanceChart extends PureComponent {
   render() {
+    
+const {
+      data = [
+        { name: 'Jan', expenses: 25, savings: 15 },
+        { name: 'Feb', expenses: 50, savings: 30 },
+        { name: 'Mar', expenses: 75, savings: 45 },
+        { name: 'Apr', expenses: 20, savings: 60 },
+        { name: 'May', expenses: 125, savings: 75 },
+        { name: 'Jun', expenses: 150, savings: 90 },
+        { name: 'Jul', expenses: 200, savings: 105 },
+        { name: 'Aug', expenses: 200, savings: 120 },
+        { name: 'Sep', expenses: 225, savings: 135 },
+        { name: 'Oct', expenses: 240, savings: 150 },
+        { name: 'Nov', expenses: 230, savings: 165 },
+        { name: 'Dec', expenses: 250, savings: 180 }
+      ],
+      yAxisTicks = [0, 50, 100, 150, 200, 250],
+      xAxisTicks
+    } = this.props;
+
     return (
       <div className="rounded-lg p-4 shadow bg-[#0B1739] text-white">
         {/* Header Section */}

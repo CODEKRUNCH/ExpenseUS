@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import Expenserecord
+from .models import Transactionrecord
 # Register your models here.
 
-admin.site.register(Expenserecord)
+admin.site.register(Transactionrecord)
 # Register your models here.

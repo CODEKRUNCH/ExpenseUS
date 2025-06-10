@@ -3,10 +3,12 @@ export const TransactionRetrieve=async()=>
 {
  try{
     const response = await api.get('/transactionlist/')
-      const formattedData = response.data.map(txn => ({
-      ...txn,
-      DateandTimePayed: txn.DateandTimePayed.split('T')[0]  // keep only date part
-    }));
+         const data = response.data.results ? response.data.results : response.data;
+
+         const formattedData = data.map(txn => ({
+            ...txn,
+            DateandTimePayed: txn.DateandTimePayed.split('T')[0]
+         }));
     return formattedData
  }
  catch(error)

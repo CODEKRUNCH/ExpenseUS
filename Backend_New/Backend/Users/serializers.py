@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import serializers
+from Transactions.models import Wallet
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
@@ -38,4 +39,5 @@ class UserLoginSerializer(serializers.Serializer):
                             'last_name': user.last_name
                         }
                     }
+        Wallet.objects.create(user=user)  # 👈 Automatically create wallet
         raise serializers.ValidationError("Invalid email or password")

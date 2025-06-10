@@ -29,6 +29,7 @@ function Logout() {
 function App() {
   return (
     <AuthProvider>
+<<<<<<< HEAD
       <Router>
         <Routes>
           {/* Auth routes without Navbar */}
@@ -45,13 +46,30 @@ function App() {
             {/* Default Path of none Selected */}
             <Route path="/" element={<ProfitPathHome />} />
             {/* Regular Paths without the default path  */}
+=======
+    <Router>
+      <Routes>
+        {/* Auth routes without Navbar */}
+        <Route path="/login" element={<ProfitPathLogin />} />
+        <Route path="/signup" element={<ExpenseUsSignup />} />
+         <Route path="/home" element={<WelcomePage/>} />
+         <Route path="/dashboard" element={<ProfitPathHome/>} />
+         <Route path="/budgeting" element={<BudgetScreen/>}/>
+>>>>>>> cada751825f8be721b5610c7bf6d4a0d36240840
             <Route path="/transactions" element={<Transactions />} />
-            <Route path="/personalwallet" element={<PersonalWallet />} />
-            <Route path="/logout" element={<Logout />} />
-            {/* Add your other routes that need Navbar here */}
-          </Route>
-        </Routes>
-      </Router>
+        {/* Routes with Navbar */}
+        <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
+         {/* Default Path of none Selected */}
+         <Route path="/" element={<ProfitPathHome/>} />
+          {/* Regular Paths without the default path  */}
+          <Route path="/cryptovault" element={<Crypto />} />
+       
+          <Route path="/personalwallet" element={<PersonalWallet />} />
+          <Route path="/logout" element={<Logout />} />
+          {/* Add your other routes that need Navbar here */}
+        </Route>
+      </Routes>
+    </Router>
     </AuthProvider>
   );
 }
