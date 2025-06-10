@@ -3,7 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot } f
 
 const TAIL_LENGTH = 50;
 
-const BtcChart = () => {
+const LtcChart = () => {
   const [data, setData] = useState(Array.from({ length: TAIL_LENGTH }, (_, i) => ({
     name: `${i}s`,
     value: 0,
@@ -11,7 +11,7 @@ const BtcChart = () => {
   const buffer = useRef([]);
 
   useEffect(() => {
-    const ws = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
+    const ws = new WebSocket("wss://stream.binance.com:9443/ws/ltcusdt@trade");
 
     ws.onmessage = (event) => {
       const price = parseFloat(JSON.parse(event.data).p);
@@ -57,7 +57,7 @@ const BtcChart = () => {
                     fontSize: "10px"
                   }}
                 >
-                  <p>BTC: ${payload[0].value.toFixed(2)}</p>
+                  <p>LTC: ${payload[0].value.toFixed(2)}</p>
                 </div>
               );
             }
@@ -95,4 +95,4 @@ const BtcChart = () => {
   );
 };
 
-export default BtcChart;
+export default LtcChart;

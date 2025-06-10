@@ -38,9 +38,9 @@ const EthChart = () => {
   }, []);
 
   return (
-    <div className="mt-3 mr-2">
-      <LineChart width={79} height={80} data={data}>
-        <CartesianGrid strokeDasharray="0.1, 10" />
+    <div className="mt-4 mr-5  border-white">
+      <LineChart width={100} height={65} data={data}>
+        <CartesianGrid strokeDasharray="0, 10" />
         <XAxis dataKey="name" hide />
         <YAxis domain={["auto", "auto"]} hide />
         <Tooltip
@@ -85,7 +85,7 @@ const EthChart = () => {
         <Line
           type="basis"
           dataKey="value"
-          stroke="CYAN"
+          stroke="#0FFF50"
           dot={false}
           isAnimationActive={true}
           animationDuration={500}

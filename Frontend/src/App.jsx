@@ -10,6 +10,7 @@ import ProtectedRoute from "./Components/protectedpath"
 import { AuthProvider } from './Components/Authorization/iauthenticated';
 import BudgetScreen from './Pages/budgetscreen';
 import WelcomePage from './Pages/Welcome';
+import TransferFunds from './CryptoVault/CryptoTransfer';
 
 // Layout component that includes the Navbar
 function NavbarLayout() {
@@ -37,7 +38,8 @@ function App() {
           <Route path="/dashboard" element={<ProfitPathHome />} />
           <Route path="/budgeting" element={<BudgetScreen />} />
           <Route path="/cryptovault" element={<Crypto />} />
-
+          <Route path="/transfer" element={<TransferFunds />} />
+          
           {/* Routes with Navbar */}
           <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
             {/* Default Path of none Selected */}
