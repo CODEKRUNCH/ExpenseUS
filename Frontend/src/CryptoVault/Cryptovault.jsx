@@ -387,7 +387,6 @@ function ConnectWallet() {
                                             <div>
                                                 <div className="w-4 h-4 border-2 border-gray-400 rounded-full animate-spin"></div>
                                             </div>)}
-
                                     </div>
                                 </div>
                             )}
@@ -530,7 +529,7 @@ function ConnectWallet() {
                     </div>
                 </div>
                 <div>
-
+                    
                 </div>
             </div>
         </>

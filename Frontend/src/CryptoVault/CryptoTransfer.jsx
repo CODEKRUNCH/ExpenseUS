@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CryptoNewsBot from "../Components/CryptoNewsBot";
 
 function TransferFunds() {
     const [walletAddress, setWalletAddress] = useState("");
@@ -118,6 +119,9 @@ function TransferFunds() {
                     </div>
                 )}
             </div>
+        <div className="bg-white">
+            <CryptoNewsBot />
+        </div>
         </div>
     );
 }
