@@ -25,7 +25,8 @@ const Sidebar = ({ onClose }) => {
   const activeClass = 'bg-[#1A202C]';
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-[201px] bg-[#081028] text-[#CBD5E0] flex flex-col px-0 py-4 overflow-y-auto scrollbar-hide z-20 text-xs">
+    <div className="hidden md:fixed md:top-0 md:left-0 md:h-screen md:w-[201px] bg-[#081028] text-[#CBD5E0] md:flex md:flex-col px-0 py-4 overflow-y-auto scrollbar-hide z-20 text-xs">
+
       {/* Close Button */}
       <div
         className="absolute top-2.5 right-2.5 text-[#A0AEC0] text-lg cursor-pointer"
@@ -117,14 +118,14 @@ const Sidebar = ({ onClose }) => {
           Transaction Records
         </li>
 
-<li
-  className="flex items-center px-4 py-2 cursor-pointer hover:bg-[#2D3748] w-full text-xs"
-  onClick={() => handleSectionClick('budgeting','/budgeting')}
->
-  {/* Replace AiFillStar with your chosen icon */}
-  <MdAccountBalanceWallet className="mr-2 text-[#A0AEC0] text-sm" />
-  Budgeting
-</li>
+        <li
+          className="flex items-center px-4 py-2 cursor-pointer hover:bg-[#2D3748] w-full text-xs"
+          onClick={() => handleSectionClick('budgeting','/budgeting')}
+        >
+          {/* Replace AiFillStar with your chosen icon */}
+          <MdAccountBalanceWallet className="mr-2 text-[#A0AEC0] text-sm" />
+          Budgeting
+        </li>
 
         <li className="flex items-center px-4 py-2 cursor-pointer hover:bg-[#2D3748] w-full text-xs">
           <BsPeopleFill className="mr-2 text-[#A0AEC0] text-sm" />

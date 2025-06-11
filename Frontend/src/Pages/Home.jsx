@@ -292,7 +292,9 @@ const customStaticRanges = [
               cashval="100.8K"
               grosspercent="30.4"
             />
+            
             <DashboardUpperMetrics innerheader="Budget Utilization" cashval="50%" />
+
             <DashboardUpperMetrics
               innerheader="Savings"
               cashval="40.8K"

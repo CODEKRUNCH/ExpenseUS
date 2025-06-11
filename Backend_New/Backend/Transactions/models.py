@@ -93,7 +93,7 @@ class Transactionrecord(models.Model):
     Category=models.CharField()
     PaymentType=models.CharField()
     Payedto=models.CharField()
-    FromWallet=models.CharField()
+    FromWallet=models.ForeignKey(Wallet, on_delete=models.CASCADE)
     DateandTimePayed=models.DateTimeField()
     Note=models.CharField(null=True)
     def __str__(self):
@@ -101,14 +101,8 @@ class Transactionrecord(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:  # Only for new transactions
-            try:
-                target_wallet = Wallet.objects.get(user=self.user, type=self.FromWallet)
-            except Wallet.DoesNotExist:
-                if self.TransactionType.lower() == 'income':
-                    # Create wallet with 0 balance first
-                    target_wallet = Wallet.objects.create(user=self.user, type=self.FromWallet, balance=0)
-                else:
-                    raise ValueError(f"{self.FromWallet} wallet does not exist for this user")
+            # Directly use the Wallet instance from the ForeignKey.
+            target_wallet = self.FromWallet
 
             if self.TransactionType.lower() == 'expense':
                 target_wallet.balance -= self.Amount
@@ -116,7 +110,5 @@ class Transactionrecord(models.Model):
                 target_wallet.balance += self.Amount
 
             target_wallet.save()
-
         super().save(*args, **kwargs)
-
 

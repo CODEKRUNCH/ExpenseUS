@@ -17,7 +17,7 @@ export const createTransaction = async (
             Category: category,
             PaymentType: paymentType,
             Payedto: payedTo,
-            FromWallet: fromWallet,
+            FromWalletName: fromWallet,
             DateandTimePayed: dateAndTimePayed, // ISO 8601 format: "YYYY-MM-DDTHH:MM:SSZ"
             Note:note,
         });
