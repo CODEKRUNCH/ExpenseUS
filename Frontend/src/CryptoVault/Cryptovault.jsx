@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import "./Cryptovault.css"
 import Sidebar from "../components/sideBar";
 import EthChart from "../Components/Crypto Asset Graphs/Ethereum";
+import BtcChart from "../Components/Crypto Asset Graphs/Bitcoin";
+import LtcChart from "../Components/Crypto Asset Graphs/Litecoin";
 
 function ConnectWallet() {
     const [walletAddress, setWalletAddress] = useState("");
     const [balance, setBalance] = useState("");
     const [contractBalance, setContractBalance] = useState("");
-    const [recipientAddress, setRecipientAddress] = useState("");
-    const [sendAmount, setSendAmount] = useState("");
     const [depositAmount, setDepositAmount] = useState("");
     const [withdrawAmount, setWithdrawAmount] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -164,7 +164,24 @@ function ConnectWallet() {
     const connectWallet = async () => {
         if (window.ethereum) {
             try {
-                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                // Alternative approach: Check if already connected and clear first
+                const existingAccounts = await window.ethereum.request({
+                    method: "eth_accounts"
+                });
+
+                if (existingAccounts.length > 0) {
+                    // If already connected, force a fresh permission request
+                    await window.ethereum.request({
+                        method: 'wallet_requestPermissions',
+                        params: [{ eth_accounts: {} }]
+                    });
+                }
+
+                // Request accounts (this will show popup for new connections)
+                const accounts = await window.ethereum.request({
+                    method: "eth_requestAccounts"
+                });
+
                 setWalletAddress(accounts[0]);
 
                 const balanceHex = await window.ethereum.request({
@@ -180,61 +197,22 @@ function ConnectWallet() {
             }
             catch (err) {
                 console.log("Connection Error:", err);
+                // Handle user rejection
+                if (err.code === 4001) {
+                    alert("Please approve the connection request to use the wallet features.");
+                }
             }
         }
         else {
             alert("Please Install MetaMask!");
         }
     };
-
     const disconnectWallet = () => {
         setWalletAddress("");
         setBalance("");
         setContractBalance("");
         setTxHash("");
         setIsOwner(false);
-    };
-
-    const sendTransaction = async () => {
-        if (!walletAddress) {
-            alert("Please connect your wallet first");
-            return;
-        }
-
-        if (!recipientAddress || !sendAmount) {
-            alert("Please fill in all fields");
-            return;
-        }
-
-        setIsLoading(true);
-        try {
-            const amountWei = (parseFloat(sendAmount) * Math.pow(10, 18)).toString(16);
-
-            const txParams = {
-                from: walletAddress,
-                to: recipientAddress,
-                value: '0x' + amountWei,
-                gas: '0x5208',
-            };
-
-            const result = await window.ethereum.request({
-                method: 'eth_sendTransaction',
-                params: [txParams],
-            });
-
-            setTxHash(result);
-            setRecipientAddress("");
-            setSendAmount("");
-
-            setTimeout(async () => {
-                await refreshBalances();
-            }, 3000);
-
-        } catch (err) {
-            console.error("Transaction Error:", err);
-            alert("Transaction failed: " + err.message);
-        }
-        setIsLoading(false);
     };
 
     const depositToContract = async () => {
@@ -376,7 +354,7 @@ function ConnectWallet() {
 
     return (
         <>
-            <div className="bg-gray-950 min-h-full border border-gray-950">
+            <div className="bg-gray-700 min-h-full border border-gray-950">
                 <Sidebar />
 
                 {isOwner && walletAddress && (
@@ -409,82 +387,92 @@ function ConnectWallet() {
                                             <div>
                                                 <div className="w-4 h-4 border-2 border-gray-400 rounded-full animate-spin"></div>
                                             </div>)}
-
                                     </div>
                                 </div>
                             )}
 
+                            <div className="flex flex-between gap-3">
 
+                                <div className="bg-[#0B1739] border border-gray-800 rounded-md p-15">
+                                    <div className="flex flex-col items-center gap-8">
 
-                            <div className="grid grid-flow-col grid-rows-3 gap-4 ">
+                                        {/* Wallet Balance Section */}
+                                        <div className="flex flex-col items-center text-center">
 
-                                {/*WALLET ADDRESS*/}
-                                <div className="bg-[#0B1739] row-span-3 w-60 h-60 flex flex-col items-center rounded-md border border-gray-800">
-                                    <div>
-                                        <div className="flex flex-col items-center gap-8">
+                                            {isRefreshing && (
+                                                <div className="mb-2"></div>
+                                            )}
+                                            <img src="/images/wallet.png" className="w-12 h-12 mb-4" />
+                                            <p className="text-sm text-gray-400 mb-1">Wallet Balance</p>
+                                            <p className="text-2xl text-white font-bold">
+                                                {walletAddress ? `${balance} ETH` : "Updating..."}
+                                            </p>
+                                        </div>
 
-                                            <div className="flex flex-col items-center">
-                                                {isRefreshing && (
-                                                    <div className="absolute top-2 right-2">
+                                        {/* Contract Balance Section */}
+                                        <div className="flex flex-col items-center text-center">
+                                            <p className="text-sm text-gray-400 mb-1">Contract Balance</p>
+                                            <p className="text-md text-gray-300 font-semibold">
+                                                {contractBalance ? `${contractBalance} ETH` : "Updating..."}
+                                            </p>
+                                            {!walletAddress && (
+                                                <p className="text-xs text-gray-400 mt-1"></p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
 
-                                                    </div>)}
+                                <div className="w-170 h-70 ">
+                                    <div className="grid grid-cols-7 gap-3 w-198">
+
+                                        <div className="rounded-lg col-span-2 row-span-12 bg-[#0B1739] border border-gray-800">            {/*Ethereum*/}
+                                            <div className="flex justify-between">
                                                 <div>
-                                                    <img src="/images/wallet.png" className="w-12 h-12 mr-33 mt-5 " /></div>
-                                                <p className="text-sm text-gray-400 mt-7 ml-[-112px]">Wallet Balance</p>
-                                                <p className="text-[26px] text-white   ml-[-69px] font-semibold">
-                                                    {walletAddress ? `${balance} ETH` : "-- ETH"}
-                                                </p>
-                                                {!walletAddress && (
-                                                    <p className="text-xs text-gray-400 mt-1"></p>)}
-                                            </div>
-
-                                            <div>
-                                                <div className="bg-[#0B1739] flex flex-col items-center rounded-md ">
-
-                                                    <p className="text-sm text-gray-400 ml-[-101px]">Contract Balance</p>
-                                                    <p className="text-[14px] text-gray-300 ml-[-130px] font-semibold">
-                                                        {contractBalance ? `${contractBalance} ETH` : ""}
-                                                    </p>
-                                                    {!walletAddress && (
-                                                        <p className="text-xs text-gray-400"></p>)}
+                                                    <img src="/images/ethereum.png" class="h-13 w-13 ml-1 mt-3 " />
+                                                    <p className="text-[11px] ml-4 text-gray-400 mt-4">ETH</p>
+                                                    <p className="text-[15px] text-white ml-4">Ethereum</p>
+                                                </div>
+                                                <div className="flex flex-end ml-4">
+                                                    <EthChart />
+                                                    <p className="relative font-bold text-[20px] top-23 right-24 text-white">0.22006</p>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div>
-
-                                {/*CONTRACT BALANCE*/}
-
-                                <div className="bg-gray-950 col-span-2 h-28 row-span-1 rounded-md w-[734px]">
-                                    <div className="grid grid-flow-col grid-rows-3 gap-4">
-                                        <div className="row-span-8 rounded-md text-white border border-gray-800 bg-[#0B1739] flex flex-col items-end-safe py-2 ">
-                                            <EthChart />
-                                            <div className="relative w-12">
-                                                 <img src="/images/ethereum.png" className="absolute right-40 bottom-9 h-12 w-12" />
-                                            <p className="text-gray-400 text-[11px] absolute right-[135px] top-[-83px]">ETH</p>
-                                            <p className="text-gray-300 text-[13px] absolute right-25 top-[-70px]">Ethereum</p>
-                                            <p className="text-gray-300 text-[17px] font-bold absolute right-33 top-[-21px]">0.59089$</p>
+                                        <div className="rounded-lg col-span-2 row-span-12 bg-[#0B1739] border border-gray-800">   {/*Bitcoin*/}
+                                            <div className="flex justify-between gap-8">
+                                                <div>
+                                                    <img src="/images/bitcoin.png" class="h-11 w-11 ml-4 mt-3 " />
+                                                    <p className="text-[12px] ml-4 text-gray-400 mt-6">BTC</p>
+                                                    <p className="relative text-[15px] text-white ml-4">Bitcoin</p>
+                                                </div>
+                                                <div className="flex justify-end ">
+                                                    <BtcChart />
+                                                    <p className="relative font-extrabold text-[20px] top-23 right-23 text-white">0.06091</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="row-span-8 rounded-md text-white border border-gray-800 bg-[#0B1739] flex flex-col items-center-safe">Hi</div>
-                                        <div className="row-span-8 rounded-md text-white border border-gray-800 bg-[#0B1739] flex flex-col items-center-safe">Hi</div>
-                                        <div className="row-span-8 rounded-md text-white border border-gray-800 bg-[#0B1739] flex flex-col items-center-safe">Hi</div>
+                                        <div className="rounded-lg col-span-2 row-span-12 bg-[#0B1739] border border-gray-800">     {/*Litecoin*/}
+                                            <div className="flex justify-between gap-8">
+                                                <div>
+                                                    <img src="/images/litecoin.png" class="h-11 w-11 ml-4 mt-3 " />
+                                                    <p className="text-[12px] ml-4 text-gray-400 mt-6">LTC</p>
+                                                    <p className="text-[15px] text-white ml-4">Litecoin</p>
+                                                </div>
+                                                <div className="flex justify-end ">
+                                                    <LtcChart />
+                                                    <p className="relative font-extrabold text-[20px] top-23 right-25 text-white">900.100</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="rounded-lg col-span-3 row-span-16 bg-[#0B1739] p-2 border border-cyan-300 text-white text-center">Analytics</div>      {/*Analytics*/}
+                                        <div className="rounded-lg col-span-3 row-span-16 bg-[#0B1739] "></div>      {/*Transactions*/}
                                     </div>
-
                                 </div>
-
-
-                                <div className="col-span-2 border w-[734px] items-center rounded-md bg-[#0B1739]">
-                                    <div className="grid grid-cols-3">
-                                    </div>
-                                </div>
-
-
-                                {/*This the s3rd grid*/}
-
                             </div>
-                            <div className="flex flex-col items-center pt-4">
+
+
+                            <div className="flex flex-col items-center mt-19 pt-4">
                                 <h3 className="px-4 py-3 w-60 flex flex-col items-center rounded-md text-lg text-white font-bold mb-9 border border-gray-400">Deposit & Withdraw</h3>
                                 <div className="grid grid-cols-3 md:grid-cols-2 gap-5 mb-4 border ">
                                     <div className="p-4 rounded-md border bg-[#0B1739] border-gray-800">
@@ -537,67 +525,11 @@ function ConnectWallet() {
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="flex flex-col items-center">
-                                <h3 className="px-4 py-3 w-40 flex flex-col items-center border border-gray-400 rounded-md text-lg font-bold mb-3 text-white">Send Ether</h3>
-                            </div>
-
-                            <div className="flex flex-col items-center">
-                                <div className="w-140 px-4 py-4 rounded-md bg-[#0B1739]">
-                                    <div className=" pt-2">
-                                        <div className="space-y-3">
-                                            <div>
-                                                <label className="block text-sm font-medium text-white mb-1 ">
-                                                    Recipient Address
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={recipientAddress}
-                                                    onChange={(e) => setRecipientAddress(e.target.value)}
-                                                    placeholder="0x..."
-                                                    disabled={!walletAddress}
-                                                    className="w-full px-3 py-2 border border-gray-600 bg-[#1c1c1c] rounded-md focus:outline-none focus:text-white focus: text-white text-sm disabled:opacity-50"
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-white mb-1">
-                                                    Amount (ETH)
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    step="0.001"
-                                                    value={sendAmount}
-                                                    onChange={(e) => setSendAmount(e.target.value)}
-                                                    placeholder="0.1"
-                                                    disabled={!walletAddress}
-                                                    className="w-full px-3 py-2 border border-gray-600 bg-[#1c1c1c] text-white rounded-md focus:bg-[#1c1c1c] text-sm disabled:opacity-50"
-                                                />
-                                            </div>
-
-                                            <button
-                                                onClick={sendTransaction}
-                                                disabled={isLoading || !recipientAddress || !sendAmount || !walletAddress}
-                                                className="mt-3 px-4 py-2 w-full border border-gray-700 disabled:bg-gray-800 text-white rounded-md font-semibold text-sm transition-colors cursor-pointer disabled:opacity-50"
-                                            >
-                                                {isLoading ? "Sending..." :
-                                                    !walletAddress ? "Connect Wallet to Send" : "Send Transaction"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {txHash && (
-                                <div className="bg-green-50 border border-green-200 p-3 rounded-md">
-                                    <p className="text-sm text-green-800">
-                                        Transaction successful!
-                                    </p>
-                                    <p className="text-xs text-green-600 break-all">
-                                        TX: {txHash}
-                                    </p>
-                                </div>)}
                         </div>
                     </div>
+                </div>
+                <div>
+                    
                 </div>
             </div>
         </>
