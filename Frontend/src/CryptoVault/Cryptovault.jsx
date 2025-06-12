@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Cryptovault.css"
 import Sidebar from "../components/sideBar";
+import PieChartComponent from "../Components/CryptoPieChart";
 import EthChart from "../Components/Crypto Asset Graphs/Ethereum";
 import BtcChart from "../Components/Crypto Asset Graphs/Bitcoin";
 import LtcChart from "../Components/Crypto Asset Graphs/Litecoin";
@@ -354,8 +355,8 @@ function ConnectWallet() {
 
     return (
         <>
-            <div className="bg-gray-700 min-h-full border border-gray-950">
-                <Sidebar />
+            <div className="bg-gray-950 min-h-full border border-gray-950">
+                {/* <Sidebar /> */}
 
                 {isOwner && walletAddress && (
                     <div className="flex flex-col items-center mt-2 ml-[40%] border w-[20%] bg-[#0B1739] border-green-200 p-2 rounded-md">
@@ -465,7 +466,8 @@ function ConnectWallet() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="rounded-lg col-span-3 row-span-16 bg-[#0B1739] p-2 border border-cyan-300 text-white text-center">Analytics</div>      {/*Analytics*/}
+                                        <div className="rounded-lg col-span-3 row-span-16 bg-[#0B1739] border border-gray-800 text-white text-center">
+                                        </div>      {/*Analytics*/}
                                         <div className="rounded-lg col-span-3 row-span-16 bg-[#0B1739] "></div>      {/*Transactions*/}
                                     </div>
                                 </div>
@@ -529,7 +531,7 @@ function ConnectWallet() {
                     </div>
                 </div>
                 <div>
-                    
+
                 </div>
             </div>
         </>
