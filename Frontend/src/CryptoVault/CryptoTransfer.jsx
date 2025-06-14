@@ -119,9 +119,7 @@ function TransferFunds() {
                     </div>
                 )}
             </div>
-        <div className="bg-white">
-            <CryptoNewsBot />
-        </div>
+     
         </div>
     );
 }

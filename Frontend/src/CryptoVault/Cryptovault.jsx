@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import "./Cryptovault.css"
 import Sidebar from "../components/sideBar";
-import PieChartComponent from "../Components/CryptoPieChart";
+import AssetPie from "../Components/Crypto Asset Graphs/AssetPie";
 import EthChart from "../Components/Crypto Asset Graphs/Ethereum";
 import BtcChart from "../Components/Crypto Asset Graphs/Bitcoin";
 import LtcChart from "../Components/Crypto Asset Graphs/Litecoin";
+import TransactionTable from "../Components/TransactionHistory";
 
 function ConnectWallet() {
     const [walletAddress, setWalletAddress] = useState("");
@@ -355,28 +356,27 @@ function ConnectWallet() {
 
     return (
         <>
-            <div className="bg-gray-950 min-h-full border border-gray-950">
-                {/* <Sidebar /> */}
+            <div className="flex flex-col w-full items-center bg-gray-950 min-h-full border">
+                <Sidebar />
 
                 {isOwner && walletAddress && (
-                    <div className="flex flex-col items-center mt-2 ml-[40%] border w-[20%] bg-[#0B1739] border-green-200 p-2 rounded-md">
-                        <p className="text-sm text-green-300 font-semibold">✓ You are the contract owner</p>
+                    <div className="flex flex-col items-center mt-2 border border-violet-400 w-70 p-1 bg-[#0B1739] ml-15 rounded-md">
+                        <p className="text-sm text-violet-400 font-semibold">✓ You are the contract owner</p>
                     </div>
                 )}
                 <div>
                     <button
                         onClick={walletAddress ? disconnectWallet : connectWallet}
-                        className="ml-[1160px] mt-4 w-50 text-white rounded-md py-2 px-4 hover:cursor-pointer bg-[#0B1739] hover:bg-gray-950 font-semibold text-sm transition-colors"
+                        className="relative left-243 mt-4 w-50 text-white rounded-md py-2 px-4 hover:cursor-pointer bg-[#0B1739] hover:bg-gray-950 font-semibold text-sm transition-colors"
                     >
                         {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : "Connect Wallet"}
                     </button>
-                    <div className="p-6 max-w-5xl ml-55 rounded-lg px-4 py-4 border ">
+
+
+                    <div className="max-w-7xl rounded-lg px-19 py-4 border">
                         <h1 className="mb-16 px-4 font-bold text-amber-50 text-3xl">Dashboard</h1>
-                        <div className="mb-12">
 
-                        </div>
-
-                        <div className="space-y-6">
+                        <div className="space-y-1">
                             {walletAddress && (
                                 <div className="flex justify-center items-center mb-4">
                                     <div className="flex items-center space-x-2 text-sm text-gray-400">
@@ -429,8 +429,8 @@ function ConnectWallet() {
                                         <div className="rounded-lg col-span-2 row-span-12 bg-[#0B1739] border border-gray-800">            {/*Ethereum*/}
                                             <div className="flex justify-between">
                                                 <div>
-                                                    <img src="/images/ethereum.png" class="h-13 w-13 ml-1 mt-3 " />
-                                                    <p className="text-[11px] ml-4 text-gray-400 mt-4">ETH</p>
+                                                    <img src="/images/ethereum.png" class="h-12 w-12 ml-4 mt-3 " />
+                                                    <p className="text-[11px] ml-4 text-gray-400 mt-5">ETH</p>
                                                     <p className="text-[15px] text-white ml-4">Ethereum</p>
                                                 </div>
                                                 <div className="flex flex-end ml-4">
@@ -467,14 +467,31 @@ function ConnectWallet() {
                                             </div>
                                         </div>
                                         <div className="rounded-lg col-span-3 row-span-16 bg-[#0B1739] border border-gray-800 text-white text-center">
+                                        
+                                        <div className="flex flex-between">
+                                        <div className="h-3 w-99"><AssetPie/></div>
+                                        <table className="table-auto">
+                                            <thead>
+                                                <th>
+                                                    <td>hii</td>
+                                                </th>
+                                            </thead>
+                                        </table>
+                                        </div>
+
                                         </div>      {/*Analytics*/}
-                                        <div className="rounded-lg col-span-3 row-span-16 bg-[#0B1739] "></div>      {/*Transactions*/}
+                                        <div className="p-3 rounded-lg col-span-3 row-span-16 bg-[#0B1739] text-white text-center"> {/*Transactions*/}
+                                            <div className="p2 flex flex-col items-center">
+                                            <TransactionTable />
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div className="flex flex-col items-center mt-19 pt-4">
+                            <div className="flex flex-col mr-9 items-center mt-19 pt-4">
                                 <h3 className="px-4 py-3 w-60 flex flex-col items-center rounded-md text-lg text-white font-bold mb-9 border border-gray-400">Deposit & Withdraw</h3>
                                 <div className="grid grid-cols-3 md:grid-cols-2 gap-5 mb-4 border ">
                                     <div className="p-4 rounded-md border bg-[#0B1739] border-gray-800">
@@ -487,7 +504,7 @@ function ConnectWallet() {
                                                 onChange={(e) => setDepositAmount(e.target.value)}
                                                 placeholder="0.1"
                                                 disabled={!walletAddress}
-                                                className="w-full px-3 py-2 border border-gray-700 bg-[#1c1c1c] rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200 text-sm text-gray-400 disabled:opacity-50"
+                                                className="w-full px-3 py-2 border bg-[#1c1c1c] text-white border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 text-sm disabled:bg-gray-700 disabled:opacity-50"
                                             />
                                             <button
                                                 onClick={depositToContract}
@@ -512,7 +529,7 @@ function ConnectWallet() {
                                                 onChange={(e) => setWithdrawAmount(e.target.value)}
                                                 placeholder="0.1"
                                                 disabled={!isOwner || !walletAddress}
-                                                className="w-full px-3 py-2 border bg-[#1c1c1c] text-white border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-100 text-sm disabled:bg-gray-700 disabled:opacity-50"
+                                                className="w-full px-3 py-2 border bg-[#1c1c1c] text-white border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 text-sm disabled:bg-gray-700 disabled:opacity-50"
                                             />
                                             <button
                                                 onClick={withdrawFromContract}
@@ -529,8 +546,6 @@ function ConnectWallet() {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
 
                 </div>
             </div>
