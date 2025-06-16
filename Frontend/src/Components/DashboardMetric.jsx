@@ -6,7 +6,7 @@ function DashboardUpperMetrics({innerheader,cashval,grosspercent}) {
     const precentColorDynamic= isProfit? 'text-green-500':'text-red-500'
 
     return(    
-    <div className="col-span-3 bg-[#0B1739] text-white rounded-xl">
+    <div className="col-span-3 bg-[#0B1739] text-white rounded-2xl pb-4">
     <div className="flex flex-col pl-2">
           <span className="text-sm font-medium p-3 text-gray-500">{innerheader}</span>
           <div className="flex items-baseline gap-2 pl-4">

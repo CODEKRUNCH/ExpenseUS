@@ -67,7 +67,7 @@ const {
                 contentStyle={{
                   backgroundColor: '#1f2937',
                   borderColor: '#4b5563',
-                  borderRadius: '0.25rem'
+                  borderRadius: '0.50rem'
                 }}
               />
               <Legend />
@@ -95,12 +95,6 @@ const {
               />
             </AreaChart>
           </ResponsiveContainer>
-        </div>
-
-        {/* Footer */}
-        <div className="flex justify-between text-xs text-gray-400 mt-4">
-          <span>Jan</span>
-          <span>Dec</span>
         </div>
       </div>
     );
