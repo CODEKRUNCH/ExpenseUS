@@ -473,7 +473,7 @@ function ConnectWallet() {
                                         <table className="table-auto">
                                             <thead>
                                                 <th>
-                                                    <td>hii</td>
+                                                    <td>BTC</td>
                                                 </th>
                                             </thead>
                                         </table>
