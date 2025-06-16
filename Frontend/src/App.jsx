@@ -5,7 +5,6 @@ import './App.css';
 import ProfitPathHome from './Pages/Home';
 import Transactions from './Pages/Transactions';
 import Crypto from './CryptoVault/Cryptovault';
-import TransferFunds from "./CryptoVault/CryptoTransfer";
 import PersonalWallet from './Pages/PersonalWallet';
 import ProtectedRoute from "./Components/protectedpath"
 import { AuthProvider } from './Components/Authorization/iauthenticated';
@@ -29,29 +28,28 @@ function Logout() {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Auth routes without Navbar */}
-          <Route path="/login" element={<ProfitPathLogin />} />
-          <Route path="/signup" element={<ExpenseUsSignup />} />
-          <Route path="/home" element={<WelcomePage />} />
-          <Route path="/dashboard" element={<ProfitPathHome />} />
-          <Route path="/budgeting" element={<BudgetScreen />} />
-          <Route path="/cryptovault" element={<Crypto />} />
-          <Route path="/transfer" element={<TransferFunds/>} />
-
-          {/* Routes with Navbar */}
-          <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
-            {/* Default Path of none Selected */}
-            <Route path="/" element={<ProfitPathHome />} />
-            {/* Regular Paths without the default path  */}
+    <Router>
+      <Routes>
+        {/* Auth routes without Navbar */}
+        <Route path="/login" element={<ProfitPathLogin />} />
+        <Route path="/signup" element={<ExpenseUsSignup />} />
+         <Route path="/home" element={<WelcomePage/>} />
+         <Route path="/dashboard" element={<ProfitPathHome/>} />
+         <Route path="/budgeting" element={<BudgetScreen/>}/>
             <Route path="/transactions" element={<Transactions />} />
-            <Route path="/personalwallet" element={<PersonalWallet />} />
-            <Route path="/logout" element={<Logout />} />
-            {/* Add your other routes that need Navbar here */}
-          </Route>
-        </Routes>
-      </Router>
+        {/* Routes with Navbar */}
+        <Route element={<ProtectedRoute><NavbarLayout /></ProtectedRoute>}>
+         {/* Default Path of none Selected */}
+         <Route path="/" element={<ProfitPathHome/>} />
+          {/* Regular Paths without the default path  */}
+          <Route path="/cryptovault" element={<Crypto />} />
+       
+          <Route path="/personalwallet" element={<PersonalWallet />} />
+          <Route path="/logout" element={<Logout />} />
+          {/* Add your other routes that need Navbar here */}
+        </Route>
+      </Routes>
+    </Router>
     </AuthProvider>
   );
 }

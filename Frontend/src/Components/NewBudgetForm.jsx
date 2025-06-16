@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import{CreateBudget} from '../api/budgetcreate'
-const BudgetForm = ({ onClose }) =>{
+const BudgetForm = ({ onClose,onSave}) =>{
     const [budgetName, setBudgetName] = useState('');
     const [budgetAmount, setBudgetAmount] = useState(0);
     const [budgetCategory, setBudgetCategory] = useState('Food & Drinks'); // Default from image
@@ -22,6 +22,8 @@ const handleSubmit = async(e) => {
                 budgetPeriod
             )
             console.log("Budget Success",BudgetData)
+            onClose()
+            onSave()
         }
         catch(error)
         {

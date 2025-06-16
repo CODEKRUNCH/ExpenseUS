@@ -1,10 +1,44 @@
 from .models import Transactionrecord,Wallet,Budget
 from rest_framework import serializers
+
+
 class TransactionSerializer(serializers.ModelSerializer):
+    # This field is only for user input
+    FromWalletName = serializers.CharField(write_only=True)
+    # This field is read-only so it won’t be expected in the input
+    FromWallet = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
-        model=Transactionrecord
-        fields='__all__'
-        read_only_fields=['user']
+        model = Transactionrecord
+        # Notice we do NOT include FromWallet in the input fields
+        fields = [
+            'Amount',
+            'TransactionType',
+            'Category',
+            'PaymentType',
+            'Payedto',
+            'DateandTimePayed',
+            'FromWallet',      # Returned in the response but not expected from input
+            'FromWalletName'   # Used to derive the wallet behind the scenes
+        ]
+
+    def validate(self, data):
+        user = self.context['request'].user
+        wallet_name = data.pop('FromWalletName', None)
+
+        if not wallet_name:
+            raise serializers.ValidationError({"FromWalletName": "This field is required."})
+
+        try:
+            # Adjust the lookup field as needed
+            wallet = Wallet.objects.get(user=user, type=wallet_name)
+        except Wallet.DoesNotExist:
+            raise serializers.ValidationError({"FromWalletName": "Wallet not found for user."})
+
+        # Pass the actual Wallet instance into validated_data
+        data['FromWallet'] = wallet
+        return data
+
 class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model=Wallet
