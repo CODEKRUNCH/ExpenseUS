@@ -71,7 +71,7 @@ const LtcChart = () => {
             x={data[data.length - 1].name}
             y={data[data.length - 1].value}
             r={6}
-            fill="lime"
+            fill="#AB47BC"
             stroke="black"
             strokeWidth={1.5}
             label={{
@@ -83,12 +83,7 @@ const LtcChart = () => {
           />
         )}
         <Line
-          type="basis"
-          dataKey="value"
-          stroke="#0FFF50"
-          dot={false}
-          isAnimationActive={true}
-          animationDuration={500}
+          type="basis" dataKey="value" stroke="#AB47BC" dot={false} isAnimationActive={true} animationDuration={500}
         />
       </LineChart>
     </div>

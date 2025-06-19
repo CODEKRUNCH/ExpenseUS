@@ -71,7 +71,7 @@ const EthChart = () => {
             x={data[data.length - 1].name}
             y={data[data.length - 1].value}
             r={6}
-            fill="lime"
+            fill="#AB47BC"
             stroke="black"
             strokeWidth={1.5}
             label={{
@@ -85,7 +85,7 @@ const EthChart = () => {
         <Line
           type="basis"
           dataKey="value"
-          stroke="#0FFF50"
+          stroke="#AB47BC"
           dot={false}
           isAnimationActive={true}
           animationDuration={500}
