@@ -50,7 +50,7 @@ const BtcChart = () => {
                 <div
                   style={{
                     backgroundColor: "black",
-                    border: "0px solid #00ffcc",
+                    border: "0px solid #abb2b9",
                     padding: "3px",
                     borderRadius: "2px",
                     color: "#abb2b9",
@@ -71,7 +71,7 @@ const BtcChart = () => {
             x={data[data.length - 1].name}
             y={data[data.length - 1].value}
             r={6}
-            fill="lime"
+            fill="#AB47BC"
             stroke="black"
             strokeWidth={1.5}
             label={{
@@ -85,7 +85,7 @@ const BtcChart = () => {
         <Line
           type="basis"
           dataKey="value"
-          stroke="#0FFF50"
+          stroke="#AB47BC"
           dot={false}
           isAnimationActive={true}
           animationDuration={500}
