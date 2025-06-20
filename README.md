@@ -7,12 +7,12 @@ ExpenseUS is a modern, React-based personal finance management web application. 
 ---
 
 ## 📌 Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Target Audience](#target-audience)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Running the App](#running-the-app)
+- [Introduction]
+- [Features]
+- [Target Audience]
+- [Tech Stack]
+- [Getting Started]
+- [Running the App]
 
 ---
 
