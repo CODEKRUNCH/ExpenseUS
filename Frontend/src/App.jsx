@@ -8,7 +8,7 @@ import Crypto from './CryptoVault/Cryptovault';
 import PersonalWallet from './Pages/PersonalWallet';
 import ProtectedRoute from "./Components/protectedpath"
 import { AuthProvider } from './Components/Authorization/iauthenticated';
-import BudgetScreen from './Pages/budgetscreen';
+import BudgetScreen from './Pages/Budgetscreen';
 import WelcomePage from './Pages/Welcome';
 
 // Layout component that includes the Navbar
