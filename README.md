@@ -93,8 +93,7 @@ Make sure you have the following installed:
    ```bash
    git clone https://github.com/ExpenseUS/ExpenseUS
    cd ExpenseUS
-````
-
+```
 2. **Install frontend dependencies**
 
    ```bash
