@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/sideBar'; // Assuming your sidebar component
+import Sidebar from '../Components/SideBar'; // Assuming your sidebar component
 import { AiOutlineMenu, AiOutlineDownload } from 'react-icons/ai'; // Unused, but keeping for consistency with your original code
 import { LuPlus } from "react-icons/lu"; // Plus icon for "Add new" button
 import { IoClose } from "react-icons/io5"; // Close icon for the modal

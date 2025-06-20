@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from '../Components/sideBar';
+import Sidebar from '../Components/SideBar';
 import StripeContainer from '../stripe/StripeContainer';
 
 const PersonalWallet = () => {

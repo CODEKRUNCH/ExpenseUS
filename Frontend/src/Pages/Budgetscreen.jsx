@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from '../components/sideBar';
+import Sidebar from '../Components/SideBar';
 import BudgetForm from '../Components/NewBudgetForm';
 import Budgetlist from '../Components/BudgetBox';
 import { BudgetRetrieve } from '../api/budgetretrieve';

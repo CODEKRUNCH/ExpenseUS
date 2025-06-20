@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Cryptovault.css"
-import Sidebar from "../components/sideBar";
+import Sidebar from "../Components/SideBar";
 import AssetPie from "../Components/Crypto Asset Graphs/AssetPie";
 import EthChart from "../Components/Crypto Asset Graphs/Ethereum";
 import BtcChart from "../Components/Crypto Asset Graphs/Bitcoin";
