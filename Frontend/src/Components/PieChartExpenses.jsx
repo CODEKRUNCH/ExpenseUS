@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer,Tooltip } from 'recharts';
+import ExpensesByCategory from './ExpenseByCatgegory';
 
 const data = [
   { name: 'Rent', value: 500 },
@@ -9,7 +10,7 @@ const data = [
   { name: 'Leisure', value: 120 },
   { name: 'Savings', value: 230 },
 ];
-
+export const expensecategoryContext=createContext()
 const COLORS = ['#0088FE', '#00C49F', '#A33AFF', '#FFBB28', '#FF8042', '#8884d8'];
 
 const RADIAN = Math.PI / 180;
@@ -35,7 +36,6 @@ const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent
 const PieChartExpense = () => {
   return (
     <div className='bg-[#0B1739] p-4 rounded-xl '>
-    <div className="flex justify-between items-start mb-4">
           <div>
             <h2 className="text-gray-300 text-sm font-medium">Expenses By Category</h2>
             <div className="flex items-end gap-2">
@@ -45,17 +45,19 @@ const PieChartExpense = () => {
               </span>
             </div>
           </div>
-          <p className="text-gray-400 text-sm">June 21, 2023</p>
-        </div>
+         
 
-    <div className="h-[400px]">
+   <expensecategoryContext.Provider value={{ data }}>
+  <div className="flex flex-col lg:flex-row ">
+    {/* Pie Chart */}
+    <div className="h-[400px] w-full lg:w-1/2">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
-            innerRadius={70} // 👈 Makes it a donut chart
+            innerRadius={70}
             outerRadius={150}
             labelLine={false}
             label={renderCustomLabel}
@@ -65,21 +67,27 @@ const PieChartExpense = () => {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip 
-                                   formatter={(value, name) => [`$${value}K`, name]}
-                                   labelFormatter={(label) => `Month: ${label}`}
-                                   contentStyle={{
-                                     backgroundColor: '#1f2937',
-                                     borderColor: '#4b5563',
-                                     borderRadius: '0.50rem',
-                                   }}
-                                   itemStyle={{
-                                    color:'white'
-                                   }}
-                                 />
+          <Tooltip
+            formatter={(value, name) => [`$${value}K`, name]}
+            contentStyle={{
+              backgroundColor: '#1f2937',
+              borderColor: '#4b5563',
+              borderRadius: '0.50rem',
+            }}
+            itemStyle={{
+              color: 'white',
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>
+
+    {/* Table */}
+    <div className="w-full overflow-auto">
+      <ExpensesByCategory />
+    </div>
+  </div>
+</expensecategoryContext.Provider>
     </div>
   );
 };

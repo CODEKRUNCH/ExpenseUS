@@ -20,14 +20,11 @@ const PersonalWallet = () => {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(!isSidebarOpen)} />
 
       <div
-        className="transition-all duration-300 ease-in-out"
-        style={{
-          flexGrow: 1,
-          padding: '30px',
-          marginLeft: isSidebarOpen ? '200px' : '0',
-        }}
+      className={`flex-1 px-4 md:px-10 py-6 transition-all duration-300 ${
+  isSidebarOpen ? 'ml-0 md:ml-[201px]' : 'ml-0'
+}`}
       >
-        <h2 className="text-3xl font-bold mb-6">💼 Personal Wallet</h2>
+        <h2 className="text-3xl font-bold mb-6"> Personal Wallet</h2>
 
         <div className="bg-[#0B1739] p-6 rounded-lg shadow-md max-w-md mb-6">
           <h3 className="text-xl font-semibold">Current Balance</h3>
@@ -49,7 +46,7 @@ const PersonalWallet = () => {
             <div className="text-sm text-yellow-400 mb-2">Processing payment, please wait...</div>
           )}
           {paymentStatus === 'completed' && (
-            <div className="text-sm text-green-400 mb-2">✅ Transaction complete!</div>
+            <div className="text-sm text-green-400 mb-2">Transaction complete!</div>
           )}
 
           <StripeContainer

@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from 'react';
 import Sidebar from '../Components/SideBar';
 import { AiOutlineDownload ,AiOutlineDown} from 'react-icons/ai';
-import DashboardUpperMetrics from '../components/DashboardMetric';
+import DashboardUpperMetrics from '../Components/DashboardMetric';
 import { addDays, startOfDay,format, startOfMonth, endOfMonth, startOfYear, endOfYear, subMonths, subYears, startOfQuarter, endOfQuarter, startOfWeek, endOfWeek } from 'date-fns';
 import Example from '../components/Graph';
 import { DateRangePicker } from 'react-date-range';
@@ -10,6 +10,8 @@ import 'react-date-range/dist/theme/default.css';
 import '../css/datepicker.css'
 import Barchartexpvsinc from '../Components/statspanel';
 import PieChartExpense from '../Components/PieChartExpenses';
+import TransactionsRecordPopup from '../Components/transactionrecordpopup';
+import Budgetdashboard from '../Components/Budgetdashboard';
 const ProfitPathHome = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -212,7 +214,7 @@ const customStaticRanges = [
 ];
 
     return (
-    <div className="flex bg-[#080F25] text-white p-1">
+    <div className="flex min-h-screen bg-[#080F25] text-white p-1">
       {/* Sidebar */}
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(!isSidebarOpen)} />
 
@@ -279,8 +281,16 @@ const customStaticRanges = [
           </div>
         </div>
      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 '>
-        <div className='col-span-1 md:col-span-1 lg:col-span-6'>
+        <div className='col-span-1 md:col-span-1 lg:col-span-12'>
             <PieChartExpense />
+          </div>
+        </div>
+     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 '>
+        <div className='col-span-1 md:col-span-1 lg:col-span-7 '>
+            <TransactionsRecordPopup />
+          </div>
+        <div className='col-span-1 md:col-span-1 lg:col-span-5 overflow-hidden'>
+            <Budgetdashboard/>
           </div>
         </div>
       </div>

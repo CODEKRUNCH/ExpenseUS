@@ -109,7 +109,8 @@ function ConnectWallet() {
             const balanceWei = parseInt(result, 16);
             const balanceEth = balanceWei / Math.pow(10, 18);
             setContractBalance(balanceEth.toFixed(4));
-        } catch (err) {
+        }
+         catch (err) {
             console.log("Error getting contract balance:", err);
         }
     };
@@ -353,27 +354,29 @@ function ConnectWallet() {
     }, []);
 
     const eth = "190$";
-
     return (
-        <>
-            <div className="flex flex-col w-full items-center bg-gray-950 min-h-full border">
+      
+            <div className="flex flex-col items-center min-h-screen bg-gray-950">
+                <div className="md:fixed h-full w-[201px] z-50 shadow-md">
                 <Sidebar />
+                </div>
 
                 {isOwner && walletAddress && (
+                    
                     <div className="flex flex-col items-center mt-2 border border-violet-400 w-70 p-1 bg-[#0B1739] ml-15 rounded-md">
                         <p className="text-sm text-violet-400 font-semibold">✓ You are the contract owner</p>
                     </div>
                 )}
-                <div>
+                <div className={`flex-1 relative transition-all duration-300 px-6 py-4 md:ml-[201px] } }`}>
                     <button
                         onClick={walletAddress ? disconnectWallet : connectWallet}
-                        className="relative left-243 mt-4 w-50 text-white rounded-md py-2 px-4 hover:cursor-pointer bg-[#0B1739] hover:bg-gray-950 font-semibold text-sm transition-colors"
+                        className="relative left-200 mt-4 w-50 text-white rounded-md py-2 px-4 hover:cursor-pointer bg-[#0B1739] hover:bg-gray-950 font-semibold text-sm transition-colors"
                     >
                         {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : "Connect Wallet"}
                     </button>
 
 
-                    <div className="max-w-7xl rounded-lg px-19 py-4 border">
+                    <div className=" max-w-7xl rounded-lg px-19 py-4 border">
                         <h1 className="mb-16 px-4 font-bold text-amber-50 text-3xl">Dashboard</h1>
 
                         <div className="space-y-1">
@@ -393,7 +396,6 @@ function ConnectWallet() {
                             )}
 
                             <div className="flex flex-between gap-3">
-
                                 <div className="bg-[#0B1739] border border-gray-800 rounded-md p-15">
                                     <div className="flex flex-col items-center gap-8">
 
@@ -424,8 +426,7 @@ function ConnectWallet() {
                                 </div>
 
                                 <div className="w-170 h-70 ">
-                                    <div className="grid grid-cols-7 gap-3 w-198">
-
+                                    <div className="grid grid-cols-7 gap-3 w-180 md:w-196">
                                         <div className="rounded-lg col-span-2 row-span-12 bg-[#0B1739] border border-gray-800">            {/*Ethereum*/}
                                             <div className="flex justify-between">
                                                 <div>
@@ -548,8 +549,8 @@ function ConnectWallet() {
                     </div>
 
                 </div>
+                
             </div>
-        </>
     );
 }
 

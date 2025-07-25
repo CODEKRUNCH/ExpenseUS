@@ -43,7 +43,7 @@ const BudgetScreen = () => {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(!isSidebarOpen)} />
 
       {/* Main Content */}
-      <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? 'ml-[200px]' : 'ml-0'}`}>
+      <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? 'md:ml-[200px]' : 'ml-0'}`}>
         {/* Top Bar */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
           <div>

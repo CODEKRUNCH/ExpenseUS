@@ -58,7 +58,7 @@ const TransactionsTable=({
                   {transaction.TransactionType}
                 </td>
                 <td className="px-4 py-3">{transaction.Category}</td>
-                <td className="px-4 py-3 text-right relative">
+                <td className="px-4 py-3 text-right relative inline-block">
                   {/* Three dots button */}
                   <button
                     className="text-gray-400 hover:text-white cursor-pointer"

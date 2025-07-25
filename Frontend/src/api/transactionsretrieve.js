@@ -9,7 +9,18 @@ export const TransactionRetrieve=async()=>
             ...txn,
             DateandTimePayed: txn.DateandTimePayed.split('T')[0]
          }));
-    return formattedData
+         while(formattedData.length<5)
+         {
+            formattedData.push({
+               DateandTimePayed: '--',
+               Amount: '--',
+               Payedto: '--',
+               TransactionType: '--',
+               Category: '--',
+               isPlaceholder: true,
+            })
+         }
+    return formattedData.slice(0, 5);
  }
  catch(error)
  {

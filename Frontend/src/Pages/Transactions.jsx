@@ -128,13 +128,9 @@ const expenseCategories = [
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
       <div
-        style={{
-          flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          marginLeft: isSidebarOpen ? '200px' : '0',
-          transition: 'margin-left 0.3s ease-in-out',
-        }}
+        className={`flex-1 transition-all duration-300 ${
+  isSidebarOpen ? 'ml-0 md:ml-[201px]' : 'ml-0'
+}`}
       >
         {/* Top Bar for Transactions */}
         <div className='flex justify-between items-center p-4 bg-[#080F25] border-b border-gray-700'>

@@ -8,7 +8,7 @@ function DashboardUpperMetrics({innerheader,cashval,grosspercent}) {
     return(    
     <div className="col-span-3 bg-[#0B1739] text-white rounded-2xl pb-4">
     <div className="flex flex-col pl-2">
-          <span className="text-sm font-medium p-3 text-gray-500">{innerheader}</span>
+          <span className="text-sm font-medium p-3 text-white">{innerheader}</span>
           <div className="flex items-baseline gap-2 pl-4">
             <span className="text-2xl font-bold text-white">{cashval}</span>
             <span className={`text-sm font-medium ${precentColorDynamic}`}>{grosspercent+'%'}</span>
