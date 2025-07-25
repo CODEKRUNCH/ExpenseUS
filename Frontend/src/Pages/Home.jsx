@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import Sidebar from '../Components/SideBar';
+import Sidebar from '../Components/Sidebar';
 import { AiOutlineDownload ,AiOutlineDown} from 'react-icons/ai';
 import DashboardUpperMetrics from '../Components/DashboardMetric';
 import { addDays, startOfDay,format, startOfMonth, endOfMonth, startOfYear, endOfYear, subMonths, subYears, startOfQuarter, endOfQuarter, startOfWeek, endOfWeek } from 'date-fns';
