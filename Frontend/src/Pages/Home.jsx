@@ -216,7 +216,7 @@ const customStaticRanges = [
     return (
     <div className="flex min-h-screen bg-[#080F25] text-white p-1">
       {/* Sidebar */}
-      <Sidebar onClose={() => setIsSidebarOpen(!isSidebarOpen)} />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(!isSidebarOpen)} />
 
       {/* Main Content */}
       <div className={`w-full flex flex-col bg-[#080F25] gap-3 ${isSidebarOpen ? 'lg:ml-[200px]' : 'ml-0'}`}>
